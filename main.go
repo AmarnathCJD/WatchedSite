@@ -32,9 +32,14 @@ func init() {
 
 func SearchTmdb(w http.ResponseWriter, r *http.Request) {
 	_url := "https://api.themoviedb.org/3/search/multi"
+        _query := r.FormValue("query")
+        if _query == "Trending" {
+           parseTrending(w, _query)
+           return 
+        }
 	params := map[string]string{
 		"api_key":       TMDB_API_KEY,
-		"query":         url.QueryEscape(r.FormValue("query")),
+		"query":         url.QueryEscape(_query),
 		"language":      "en-US",
 		"page":          "1",
 		"include_adult": "false",
@@ -48,6 +53,20 @@ func SearchTmdb(w http.ResponseWriter, r *http.Request) {
 	data, _ := ioutil.ReadAll(resp.Body)
 	fmt.Fprintf(w, string(data))
 }
+
+func parseTrending(w http.ResponseWriter, query string) {
+ _url := "https://api.themoviedb.org/3/trending/all/day"
+ resp, err := http.Get(_url + "?" + TMDB_API_KEY)
+ if err != nil {
+   fmt.Fprintf(w, "Error: %s", err)
+		return
+	}
+ defer resp.Body.Close()
+ data, _ := ioutil.ReadAll(resp.Body)
+ fmt.Fprintf(w, string(data))
+}
+    
+
 
 func encodeParams(params map[string]string) string {
 	var query string
@@ -64,3 +83,4 @@ func getPort() string {
         }
         return port
 }
+
