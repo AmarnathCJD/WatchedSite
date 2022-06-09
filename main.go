@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
+        "net/url"
         "os"
 )
 
@@ -30,15 +31,15 @@ func init() {
 }
 
 func SearchTmdb(w http.ResponseWriter, r *http.Request) {
-	url := "https://api.themoviedb.org/3/search/multi"
+	_url := "https://api.themoviedb.org/3/search/multi"
 	params := map[string]string{
 		"api_key":       TMDB_API_KEY,
-		"query":         r.FormValue("query"),
+		"query":         url.QueryEscape(r.ParseForm("query")),
 		"language":      "en-US",
 		"page":          "1",
 		"include_adult": "false",
 	}
-	resp, err := http.Get(url + "?" + encodeParams(params))
+	resp, err := http.Get(_url + "?" + encodeParams(params))
 	if err != nil {
 		fmt.Fprintf(w, "Error: %s", err)
 		return
