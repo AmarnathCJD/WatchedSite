@@ -85,7 +85,7 @@
         <article class="panel">
             <div class="panel-block is_link">
                 <p class="control has-icons-left">
-                    <input class="input" type="text" placeholder="Enter movies, TV shows or people">
+                    <input class="input" type="text" placeholder="Enter movies, TV shows or people" id="search">
                     <span class="icon is-left">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-search" viewBox="0 0 16 16">
@@ -101,28 +101,7 @@
                 <a>TV Shows</a>
             </p>
         </article>
-        <div class="container">
-            <div class="columns">
-                <div class="column">
-                    <div class="box">
-                        <div class="media">
-                            <div class="media-left">
-                                <figure class="image is-64x64">
-                                    <img src="https://picsum.photos/200/300" alt="Image">
-                                </figure>
-                            </div>
-                            <div class="media-content">
-                                <p class="title is-4">
-                                    <a href="https://www.themoviedb.org/movie/tt0499549">The Dark Knight</a>
-                                </p>
-                                <p class="subtitle is-6">
-                                    <a href="https://www.themoviedb.org/movie/tt0499549">Batman</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="container" id="results">
         </div>
     </section>
 
@@ -149,13 +128,63 @@
         }
 
         var inputBox = document.getElementById("search");
-        inputBox.addEventListener("keyup", function(event) {
+        inputBox.addEventListener("keyup", function (event) {
             if (event.keyCode === 13) {
                 event.preventDefault();
                 document.getElementById("search-button").click();
             }
         });
 
+        function search() {
+            var query = "Avatar";
+            $.ajax({
+                url: "/search?query=" + query,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    updateResultTable(data);
+                }
+            });
+        }
+
+        function updateResultTable(data) {
+            var container = document.getElementById("results");
+            container.innerHTML = "";
+            var row = '<div class="columns">';
+            var q = 0
+            console.log(data);
+            for (var i = 0; i < data.results.length; i++) {
+                if (q == 4) {
+                    row += '</div><div class="columns">';
+                    q = 0;
+                }
+                q += 1;
+                var movie = data[i];
+                row += `<div class="column">
+                    <div class="box">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-64x64">
+                                    <img src="" alt="Image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">
+                                    <a href="https://www.themoviedb.org/movie/tt0499549">${movie.title}</a>
+                                </p>
+                                <p class="subtitle is-6">
+                                    <a href="https://www.themoviedb.org/movie/tt0499549">Batman</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div> `;
+            }
+            row += '</div>';
+            console.log(row);
+            container.innerHTML = row;
+        }
+        document.onload = search();
     </script>
 </body>
 
