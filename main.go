@@ -56,7 +56,7 @@ func SearchTmdb(w http.ResponseWriter, r *http.Request) {
 
 func parseTrending(w http.ResponseWriter, query string) {
  _url := "https://api.themoviedb.org/3/trending/all/day"
- resp, err := http.Get(_url + "?" + TMDB_API_KEY)
+ resp, err := http.Get(_url + "?api_key=" + TMDB_API_KEY)
  if err != nil {
    fmt.Fprintf(w, "Error: %s", err)
 		return
