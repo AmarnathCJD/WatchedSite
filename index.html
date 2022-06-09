@@ -139,10 +139,10 @@
         function search() {
             var query = inputBox.value;
             if (query == "") {
-                query = "Latest"
+                query = "Trending"
             }
             $.ajax({
-                url: "/search?query=" + query,
+                url: "/search?query=" + encodeURI(query),
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
