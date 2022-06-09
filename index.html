@@ -137,7 +137,7 @@
         });
 
         function search() {
-            var query = "Avatar";
+            var query = inputBox.value;
             $.ajax({
                 url: "/search?query=" + query,
                 type: "GET",
@@ -187,7 +187,6 @@
             </div>`;
             }
             row += '</div>';
-            console.log(row);
             container.innerHTML = row;
         }
         function TrimString(str, length) {
