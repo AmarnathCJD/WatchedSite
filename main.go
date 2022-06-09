@@ -34,7 +34,7 @@ func SearchTmdb(w http.ResponseWriter, r *http.Request) {
 	_url := "https://api.themoviedb.org/3/search/multi"
 	params := map[string]string{
 		"api_key":       TMDB_API_KEY,
-		"query":         url.QueryEscape(r.ParseForm("query")),
+		"query":         url.QueryEscape(r.FormValue("query")),
 		"language":      "en-US",
 		"page":          "1",
 		"include_adult": "false",
