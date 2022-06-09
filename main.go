@@ -7,9 +7,17 @@ import (
 	"net/http"
 )
 
+const (
+	TMDB_API_KEY = "d56e51fb77b081a9cb5192eaaa7823ad"
+)
+
+var (
+        PORT = getPort()
+)
+
 func main() {
-	fmt.Println("Listening on port 80")
-	http.ListenAndServe(":80", nil)
+	fmt.Println(fmt.Sprintf("Listening on port %s", PORT))
+	http.ListenAndServe(":"+PORT, nil)
 }
 
 func init() {
@@ -19,10 +27,6 @@ func init() {
 	})
 	http.HandleFunc("/search", SearchTmdb)
 }
-
-const (
-	TMDB_API_KEY = "d56e51fb77b081a9cb5192eaaa7823ad"
-)
 
 func SearchTmdb(w http.ResponseWriter, r *http.Request) {
 	url := "https://api.themoviedb.org/3/search/multi"
@@ -49,4 +53,12 @@ func encodeParams(params map[string]string) string {
 		query += k + "=" + v + "&"
 	}
 	return query[:len(query)-1]
+}
+
+func getPort() string {
+        port := os.Getenv("PORT")
+        if port == "" {
+                return "80"
+        }
+        return port
 }
