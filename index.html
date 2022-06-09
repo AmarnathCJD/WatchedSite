@@ -138,6 +138,9 @@
 
         function search() {
             var query = inputBox.value;
+            if (query == "") {
+                query = "Latest"
+            }
             $.ajax({
                 url: "/search?query=" + query,
                 type: "GET",
