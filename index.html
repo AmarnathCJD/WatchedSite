@@ -98,6 +98,8 @@
         <div class="container" id="results">
         </div>
 
+
+
     </section>
 
     <script>
@@ -165,40 +167,40 @@
                     continue
                 }
                 if (movie.title == null) {
-                 movie.title = movie.name
-}
+                    movie.title = movie.name
+                }
                 row += `<div class="column">
-                <div class="card">
-                    <header class="card-header">
-    <p class="card-header-title">
-      ${movie.title}
-    </p>
-    <button class="card-header-icon" aria-label="more options">
-      <span class="icon">
-        <i class="fas fa-angle-down" aria-hidden="true"></i>
-      </span>
-    </button>
-  </header>
-                    <div class="card-image">
-                        <figure class="image is-2by3">
-                            <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="Placeholder image">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-
-                        <div class="content">
-                            <b>${TrimString(movie.overview, 100)}</b>
-                            <br>
-                            <time datetime="2016-1-1">Released: ${movie.release_date}</time>
-                        </div>
-                     
-                    </div>
-<footer class="card-footer">
-  <button class="button is-warning card-footer-item">Info</button>
-  <button class="button is-danger card-footer-item">WatchNow</button>
-  </footer>
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        ${movie.title}
+                    </p>
+                    <button class="card-header-icon" aria-label="more options">
+                        <span class="icon">
+                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                    </button>
+                </header>
+                <div class="card-image">
+                    <figure class="image is-2by3">
+                        <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="Placeholder image">
+                    </figure>
                 </div>
-            </div>`;
+                <div class="card-content">
+
+                    <div class="content">
+                        <b>${TrimString(movie.overview, 100)}</b>
+                        <br>
+                        <time datetime="2016-1-1">Released: ${movie.release_date}</time>
+                    </div>
+
+                </div>
+                <footer class="card-footer">
+                    <button class="button is-warning card-footer-item">Info</button>
+                    <button class="button is-danger card-footer-item">WatchNow</button>
+                </footer>
+            </div>
+        </div>`;
             }
             row += '</div>';
             container.innerHTML = row;
@@ -214,4 +216,5 @@
         document.onload = search();
     </script>
 </body>
+
 </html>
