@@ -31,8 +31,12 @@ func init() {
 	http.HandleFunc("/search/movie", getMovie)
 	http.HandleFunc("/search/tv", getTvShow)
 	http.HandleFunc("/movie/", func(w http.ResponseWriter, r *http.Request) {
-		movie := template.Must(template.ParseFiles("movie.html"))
+		movie := template.Must(template.ParseFiles("movies.html"))
 		movie.Execute(w, nil)
+	})
+	http.HandleFunc("/tv/", func(w http.ResponseWriter, r *http.Request) {
+		tv := template.Must(template.ParseFiles("tvshows.html"))
+		tv.Execute(w, nil)
 	})
 }
 

@@ -10,7 +10,7 @@
         content="https://www.nicepng.com/png/detail/193-1930799_television-icon-people-watching-tv-icon.png" />
     <meta name="og:title" content="Watch TV" />
     <meta name="og:description"
-        content="Watch the latest movies and TV shows online or offline. Watch anywhere, anytime.">
+        content="Watch the latest movies and TV shows online or offline. Watch anywhere, anytime." />
     <title>Watched Home</title>
 </head>
 
@@ -18,7 +18,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <section class="section hero">
-        <nav class="navbar is-light title is-5" role="navigation" aria-label="main navigation">
+        <nav class="navbar is-light title is-5" role="navigation" aria-label="main navigation" id="navbar">
             <div class="navbar-brand">
                 <a class="navbar-item" style="text-underline-offset: -10000000000px;">
                     <div>
@@ -65,13 +65,23 @@
                             <a class="button is-light" style="text-underline-offset: -10000000000px;">
                                 Log in
                             </a>
+                            <button class="button is-light" id="darkmode"
+                                style="text-underline-offset: -10000000000px;">
+                                <span class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                       
+                                        <path
+                                            d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z" />
+                                    </svg>
+                                </span>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </nav>
         <div class="container">
-            <div class="box is-danger">
+            <div class="box is-danger" id="msg">
                 <h1 class="title is-5">Welcome.<br>
                     Millions of movies, TV shows and people to discover. Explore now.</span>
                 </h1>
@@ -237,6 +247,59 @@
         }
         document.getElementById("search-button").addEventListener("click", search);
         document.onload = search();
+    </script>
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                WatchTV is a project by <a href="t.me/roseloverx">@roseloverx</a><br>
+                copyright &copy; 2022
+            </p>
+        </div>
+    </footer>
+    <script>
+        var body = $("body");
+        var footer = $("#footer");
+        var navbar = $("#navbar");
+        var btn = $("#darkmode");
+        var msg = $("#msg");
+        function enableDarkMode() {
+            localStorage.setItem("darkmode", "enabled");
+            btn.addClass("is-link");
+            btn.removeClass("is-light");
+            msg.addClass("has-background-black");
+            msg.addClass("has-text-white");
+            body.addClass("has-text-white");
+            body.addClass("has-background-black");
+            footer.addClass("has-text-white");
+            footer.addClass("has-background-black");
+            navbar.addClass("is-primary");
+        }
+        function disableDarkMode() {
+            btn.addClass("is-light");
+            btn.removeClass("is-link");
+            localStorage.setItem("darkmode", "false");
+            msg.removeClass("has-background-black");
+            msg.removeClass("has-text-white");
+            body.removeClass("has-text-white");
+            body.removeClass("has-background-black");
+            footer.removeClass("has-text-white");
+            footer.removeClass("has-background-black");
+            navbar.removeClass("is-primary");
+        }
+
+        if (localStorage.getItem("darkmode") == "true") {
+            enableDarkMode();
+        } else {
+            disableDarkMode();
+        }
+
+        btn.on("click", function () {
+            if (localStorage.getItem("darkmode") == "false") {
+                enableDarkMode();
+            } else {
+                disableDarkMode();
+            }
+        });
     </script>
 </body>
 
