@@ -2,6 +2,7 @@
 
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" crossorigin="anonymous">
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Watched Home</title>
@@ -13,15 +14,15 @@
     <section class="section hero">
         <nav class="navbar is-light title is-5" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
-                <a class="navbar-item">
-                    <div class="fs-2">
+                <a class="navbar-item" style="text-underline-offset: -10000000000px;">
+                    <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-tv-fill" viewBox="0 0 16 16">
                             <path
                                 d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zM2 2h12s2 0 2 2v6s0 2-2 2H2s-2 0-2-2V4s0-2 2-2z">
                             </path>
                         </svg>
-                        <span class="has-text-weight-bold">Watch TV</span>
+                        Watch TV
                     </div>
                 </a>
                 <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
@@ -34,19 +35,16 @@
 
             <div id="navbarBasicExample" class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item">
-                        Documentation
-                    </a>
                     <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
+                        <a class="navbar-link" style="text-underline-offset: -10000000000px;">
                             More
                         </a>
                         <div class="navbar-dropdown">
-                            <a class="navbar-item">
+                            <a class="navbar-item" style="text-underline-offset: -10000000000px;">
                                 About
                             </a>
                             <hr class="navbar-divider">
-                            <a class="navbar-item">
+                            <a class="navbar-item" style="text-underline-offset: -10000000000px;">
                                 Report an issue
                             </a>
                         </div>
@@ -55,10 +53,10 @@
                 <div class="navbar-end">
                     <div class="navbar-item">
                         <div class="buttons">
-                            <a class="button is-primary">
+                            <a class="button is-primary" style="text-underline-offset: -10000000000px;">
                                 <strong>Sign up</strong>
                             </a>
-                            <a class="button is-light">
+                            <a class="button is-light" style="text-underline-offset: -10000000000px;">
                                 Log in
                             </a>
                         </div>
@@ -76,24 +74,38 @@
                 </h2>
             </div>
         </div>
+        <div class="field has-addons">
+            <p class="control is-expanded has-icons-left">
+                <input class="input" type="text" placeholder="Enter movies, TV shows or people" id="search">
+                <span class="icon is-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-aspect-ratio" viewBox="0 0 16 16">
+                        <path
+                            d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5v-9zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z" />
+                        <path
+                            d="M2 4.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H3v2.5a.5.5 0 0 1-1 0v-3zm12 7a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H13V8.5a.5.5 0 0 1 1 0v3z" />
+                    </svg>
+                </span>
+            </p>
+            <p class="control">
+                <a class="button" id="search-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </a>
+            </p>
+        </div>
+        </div>
         <article class="panel">
             <div class="panel-block is_link">
-                <p class="control has-icons-left">
-                    <input class="input" type="text" placeholder="Enter movies, TV shows or people" id="search">
-                    <span class="icon is-left">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-search" viewBox="0 0 16 16">
-                            <path
-                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                        </svg>
-                    </span>
+
+                <p class="panel-tabs">
+                    <a class="is-active">All</a>
+                    <a>Movies</a>
+                    <a>TV Shows</a>
                 </p>
-            </div>
-            <p class="panel-tabs">
-                <a class="is-active">All</a>
-                <a>Movies</a>
-                <a>TV Shows</a>
-            </p>
         </article>
         <div class="container" id="results">
         </div>
@@ -169,50 +181,55 @@
                 if (movie.title == null) {
                     movie.title = movie.name
                 }
-                row += `<div class="column">
+                if (movie.release_date == null) {
+                    movie.release_date = movie.first_air_date
+                }
+                row += `
+                <div class="column" id="${movie.id}">
             <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">
-                        ${movie.title}
-                    </p>
-                    <button class="card-header-icon" aria-label="more options">
-                        <span class="icon">
-                            <i class="fas fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                    </button>
-                </header>
                 <div class="card-image">
                     <figure class="image is-2by3">
                         <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="Placeholder image">
                     </figure>
+
                 </div>
+
                 <div class="card-content">
-
                     <div class="content">
-                        <b>${TrimString(movie.overview, 100)}</b>
+                        <b class="is-size-6 has-text-centered is-family-sans-serif">${TrimString(movie.overview, 100)}</b>
                         <br>
-                        <time datetime="2016-1-1">Released: ${movie.release_date}</time>
+                        <hr class="is-hidden-mobile">
+                        <h6>Rating: <span class="tag is-warning"
+                                style="background-color: #ffc107;">${movie.vote_average}</span><br>Release Date: <span
+                                class="tag is-danger">${movie.release_date}</span></h6>
                     </div>
-
                 </div>
-                <footer class="card-footer">
-                    <button class="button is-warning card-footer-item">Info</button>
-                    <button class="button is-danger card-footer-item">WatchNow</button>
-                </footer>
+                <div class="card-footer">
+                    <a href="/${movie.media_type}/${movie.id}"
+                        class="card-footer-item button is-danger is-responsive">Watch Now</a>
+                    <a href="/${movie.media_type}/${movie.id}" class="card-footer-item button is-link is-responsive">Add
+                        to list</a>
+                </div>
             </div>
-        </div>`;
+        </div>
+                `;
             }
             row += '</div>';
             container.innerHTML = row;
+
         }
         function TrimString(str, length) {
             if (str.length > length) {
-                return str.substring(0, length) + "...";
+                s = str.substring(0, length);
+                if (s.length < length) {
+                    s += "." * (length - s.length);
+                }
+                return s + "...";
             } else {
                 return str;
             }
         }
-
+        document.getElementById("search-button").addEventListener("click", search);
         document.onload = search();
     </script>
 </body>

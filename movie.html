@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" crossorigin="anonymous">
+    <!-- CSS only -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Watched Home</title>
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <section class="section hero">
+        <nav class="navbar is-light title is-5" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" style="text-underline-offset: -10000000000px;">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-tv-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zM2 2h12s2 0 2 2v6s0 2-2 2H2s-2 0-2-2V4s0-2 2-2z">
+                            </path>
+                        </svg>
+                        Watch TV
+                    </div>
+                </a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                    data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div id="navbarBasicExample" class="navbar-menu">
+                <div class="navbar-start">
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link" style="text-underline-offset: -10000000000px;">
+                            More
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" style="text-underline-offset: -10000000000px;">
+                                About
+                            </a>
+                            <hr class="navbar-divider">
+                            <a class="navbar-item" style="text-underline-offset: -10000000000px;">
+                                Report an issue
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a class="button is-primary" style="text-underline-offset: -10000000000px;">
+                                <strong>Sign up</strong>
+                            </a>
+                            <a class="button is-light" style="text-underline-offset: -10000000000px;">
+                                Log in
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title" id="title">
+                </p>
+                <button class="card-header-icon" aria-label="more options">
+                    <span class="icon">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                </button>
+            </header>
+
+            <div class="card-image" id="image">
+            </div>
+
+
+            <div class="card-content">
+                <div class="content" id="description">
+                </div>
+
+            </div>
+            <footer class="card-footer" style="text-align: center; margin-top: 20px;">
+                <a href="#" class="card-footer-item button is-danger is-outlined" id="add">
+                    <span class="icon">
+                        <i class="fas fa-trash" aria-hidden="true"></i>
+                    </span>
+                    <span>Add to Watchlist</span>
+                </a>
+            </footer>
+        </div>
+
+
+
+
+
+        <div id="movie-info" class="container"></div>
+        <script>
+            function getMovie() {
+                id = document.location.href.split("/").pop();
+                $.ajax({
+                    url: "/search/movie?id=" + id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        $("#title").text(data.title + " (" + data.release_date + ")");
+                        $("#image").html(`<div class="container" style="margin-bottom: "30px;">"
+                             <iframe class="embed-responsive-item" src="https://www.2embed.ru/embed/tmdb/movie?id=${data.id}" allowfullscreen width="100%" height=580></iframe>
+                        </div>`);
+                        $("#description").html(
+                            `<div class="">
+            <div>
+                <small class="has-text-grey-light">${data.tagline}</small>
+                <p>${data.overview}</p>
+                <img src="https://image.tmdb.org/t/p/w500${data.poster_path}" class="is-pulled-right" alt="..."
+                    style="width: 180px;">
+                <div style="margin-top: 20px; margin-left: 0px;" class="mx-auto d-block  row align-items-center">
+                    <b>Rating:</b> <span class="tag is-success">${data.vote_average}</span>
+                    <br>
+                    <b>Genres:</b> ${"<span class='tag is-light'>" + data.genres.map(genre => genre.name).join("</span><span class='tag is-light'>") + "</span>"}
+                    <br>
+                    <b>Production Companies:</b> ${data.production_companies.map(company => company.name).join(", ")}
+                    <br>
+                    <b>Production Countries:</b> ${data.production_countries.map(country => country.name).join(", ")}
+                    <br>
+                    <b>Languages:</b> ${data.spoken_languages.map(language => language.name).join(", ")}
+                    <br>
+                    <b>Budget:</b> ${NumberToReadableCurrency(data.budget)}
+                    <br>
+                    <b>Revenue:</b> ${NumberToReadableCurrency(data.revenue)}
+                    <br>
+                    <b>Runtime:</b> ${runtimeToString(data.runtime)}
+                    <br>
+                    <b>Status:</b> ${data.status}
+                    <br>
+                </div>
+            </div>
+        </div>`
+                        );
+
+                    }
+                });
+            }
+            function NumberToReadableCurrency(number) {
+                var currency = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 0
+                }).format(number);
+                return currency;
+            }
+
+            function runtimeToString(runtime) {
+                if (runtime == null) {
+                    return "";
+                }
+                if (runtime < 60) {
+                    return runtime + " minutes";
+                } else {
+                    return Math.floor(runtime / 60) + " hours " + runtime % 60 + " minutes";
+                }
+            }
+
+            getMovie();
+        </script>

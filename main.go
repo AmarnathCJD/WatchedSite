@@ -28,6 +28,12 @@ func init() {
 		index.Execute(w, nil)
 	})
 	http.HandleFunc("/search", SearchTmdb)
+	http.HandleFunc("/search/movie", getMovie)
+	http.HandleFunc("/search/tv", getTvShow)
+	http.HandleFunc("/movie/", func(w http.ResponseWriter, r *http.Request) {
+		movie := template.Must(template.ParseFiles("movie.html"))
+		movie.Execute(w, nil)
+	})
 }
 
 func SearchTmdb(w http.ResponseWriter, r *http.Request) {
@@ -57,6 +63,44 @@ func SearchTmdb(w http.ResponseWriter, r *http.Request) {
 func parseTrending(w http.ResponseWriter, query string) {
 	_url := "https://api.themoviedb.org/3/trending/all/day"
 	resp, err := http.Get(_url + "?api_key=" + TMDB_API_KEY)
+	if err != nil {
+		fmt.Fprintf(w, "Error: %s", err)
+		return
+	}
+	defer resp.Body.Close()
+	data, _ := ioutil.ReadAll(resp.Body)
+	fmt.Fprint(w, string(data))
+}
+
+func getMovie(w http.ResponseWriter, r *http.Request) {
+	_url := "https://api.themoviedb.org/3/movie/"
+	_id := r.FormValue("id")
+	params := map[string]string{
+		"api_key":       TMDB_API_KEY,
+		"language":      "en-US",
+		"page":          "1",
+		"include_adult": "false",
+	}
+	resp, err := http.Get(_url + _id + "?" + encodeParams(params))
+	if err != nil {
+		fmt.Fprintf(w, "Error: %s", err)
+		return
+	}
+	defer resp.Body.Close()
+	data, _ := ioutil.ReadAll(resp.Body)
+	fmt.Fprint(w, string(data))
+}
+
+func getTvShow(w http.ResponseWriter, r *http.Request) {
+	_url := "https://api.themoviedb.org/3/tv/"
+	_id := r.FormValue("id")
+	params := map[string]string{
+		"api_key":       TMDB_API_KEY,
+		"language":      "en-US",
+		"page":          "1",
+		"include_adult": "false",
+	}
+	resp, err := http.Get(_url + _id + "?" + encodeParams(params))
 	if err != nil {
 		fmt.Fprintf(w, "Error: %s", err)
 		return
