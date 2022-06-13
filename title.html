@@ -12,13 +12,24 @@
     <meta name="og:description"
         content="Watch the latest movies and TV shows online or offline. Watch anywhere, anytime.">
     <title>Watch Movie</title>
+    <style>
+        .video-frame {
+            height: 580px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .video-frame {
+                height: 300px;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <section class="section hero">
-        <nav class="navbar is-light title is-5" role="navigation" aria-label="main navigation" id="navbar">
+        <nav class="navbar title is-5" role="navigation" aria-label="main navigation" id="navbar">
             <div class="navbar-brand">
                 <a class="navbar-item" style="text-underline-offset: -10000000000px;">
                     <div>
@@ -69,7 +80,6 @@
                                 style="text-underline-offset: -10000000000px;">
                                 <span class="icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-
                                         <path
                                             d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z" />
                                     </svg>
@@ -83,106 +93,29 @@
 
         <div class="card" id="card">
             <header class="card-header">
-                <p class="card-header-title" id="title">
-                </p>
+                <p class="card-header-title" id="title"></p>
             </header>
-
-            <div class="card-image" id="image">
-            </div>
+            <div class="card-image" id="image"></div>
             <div class="card-content">
                 <div class="content" id="main-selector">
-                    <button class="button is-danger" id="play-button">
-                        Add to Watchlist
-                    </button>
-                    <a class="button is-link" id="more-button" href="/">
-                        Home
-                    </a>
-
+                    <div class="buttons">
+                        <button class="button is-danger" id="play-button">
+                            Add to Watchlist
+                        </button>
+                        <a class="button is-link" id="more-button" href="/">
+                            Home
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="card-content">
-                <div class="content" id="description">
-                </div>
+                <div class="content" id="description"></div>
             </div>
+            <footer class="card-footer" style="text-align: center; margin-top: 20px;">
+            </footer>
         </div>
         <div id="movie-info" class="container"></div>
-        <script>
-            function getMovie() {
-                id = document.location.href.split("/").pop();
-                $.ajax({
-                    url: "/search/movie?id=" + id,
-                    type: "GET",
-                    dataType: "json",
-                    success: function (data) {
-                        console.log(data);
-                        $("#title").text(data.title + " (" + data.release_date + ")");
-                        $("#image").html(`<div class="container" style="margin-bottom: 30px;">
-                             <iframe class="embed-responsive-item" src="https://www.2embed.ru/embed/tmdb/movie?id=${data.id}" allowfullscreen width="100%" height=580></iframe>
-                        </div>`);
-                        $("#description").html(
-                            `<div class="">
-            <div>
-                <small class="has-text-grey-light">${data.tagline}</small>
-                <p>${data.overview}</p>
-                <img src="https://image.tmdb.org/t/p/w500${data.poster_path}" class="is-pulled-right" alt="..."
-                    style="width: 180px;">
-                <div style="margin-top: 20px; margin-left: 0px;" class="mx-auto d-block  row align-items-center">
-                    <b>Rating:</b> <span class="tag is-success">${data.vote_average}</span>
-                    <br>
-                    <b>Genres:</b> ${"<span class='tag is-light'>" + data.genres.map(genre => genre.name).join("</span><span class='tag is-light'>") + "</span>"}
-                    <br>
-                    <b>Production Companies:</b> ${data.production_companies.map(company => company.name).join(", ")}
-                    <br>
-                    <b>Production Countries:</b> ${data.production_countries.map(country => country.name).join(", ")}
-                    <br>
-                    <b>Languages:</b> ${data.spoken_languages.map(language => language.name).join(", ")}
-                    <br>
-                    <b>Budget:</b> ${NumberToReadableCurrency(data.budget)}
-                    <br>
-                    <b>Revenue:</b> ${NumberToReadableCurrency(data.revenue)}
-                    <br>
-                    <b>Runtime:</b> ${runtimeToString(data.runtime)}
-                    <br>
-                    <b>Status:</b> ${data.status}
-                    <br>
-                </div>
-            </div>
-        </div>`
-                        );
-
-                    }
-                });
-            }
-            function NumberToReadableCurrency(number) {
-                var currency = new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                    minimumFractionDigits: 0
-                }).format(number);
-                return currency;
-            }
-
-            function runtimeToString(runtime) {
-                if (runtime == null) {
-                    return "";
-                }
-                if (runtime < 60) {
-                    return runtime + " minutes";
-                } else {
-                    return Math.floor(runtime / 60) + " hours " + runtime % 60 + " minutes";
-                }
-            }
-
-            getMovie();
-        </script>
-        <footer class="footer" id="footer">
-            <div class="content has-text-centered">
-                <p>
-                    WatchTV is a project by <a href="t.me/roseloverx">@roseloverx</a><br>
-                    copyright &copy; 2022
-                </p>
-            </div>
-        </footer>
+        <script src="/assets/app.js"></script>
         <script>
             var card = $("#card");
             var title = $("#title");
@@ -231,6 +164,7 @@
                 }
             });
         </script>
+
 </body>
 
 </html>

@@ -19,7 +19,7 @@ var (
 
 func main() {
 	fmt.Println("Listening on port " + PORT)
-	http.ListenAndServe(":"+PORT, nil)
+	fmt.Println(http.ListenAndServe(":"+PORT, nil))
 }
 
 func init() {
@@ -27,16 +27,21 @@ func init() {
 		index := template.Must(template.ParseFiles("index.html"))
 		index.Execute(w, nil)
 	})
+	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 	http.HandleFunc("/search", SearchTmdb)
 	http.HandleFunc("/search/movie", getMovie)
 	http.HandleFunc("/search/tv", getTvShow)
-	http.HandleFunc("/movie/", func(w http.ResponseWriter, r *http.Request) {
-		movie := template.Must(template.ParseFiles("movies.html"))
-		movie.Execute(w, nil)
+	http.HandleFunc("/title/", func(w http.ResponseWriter, r *http.Request) {
+		title := template.Must(template.ParseFiles("title.html"))
+		title.Execute(w, nil)
 	})
-	http.HandleFunc("/tv/", func(w http.ResponseWriter, r *http.Request) {
-		tv := template.Must(template.ParseFiles("tvshows.html"))
-		tv.Execute(w, nil)
+	http.HandleFunc("/signup", func(w http.ResponseWriter, r *http.Request) {
+		s := template.Must(template.ParseFiles("signup.html"))
+		s.Execute(w, nil)
+	})
+	http.HandleFunc("/login/", func(w http.ResponseWriter, r *http.Request) {
+		l := template.Must(template.ParseFiles("title_new.html"))
+		l.Execute(w, nil)
 	})
 }
 
@@ -93,6 +98,11 @@ func getMovie(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 	data, _ := ioutil.ReadAll(resp.Body)
 	fmt.Fprint(w, string(data))
+}
+
+func getSimilarMovie(w http.ResponseWriter, r *http.Request) {
+	_url := "https://api.themoviedb.org/3/movie/"
+	fmt.Println(r.FormValue("id"), _url)
 }
 
 func getTvShow(w http.ResponseWriter, r *http.Request) {
