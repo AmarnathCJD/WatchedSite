@@ -123,6 +123,20 @@ function getShow() {
 }
 
 function getRecommendations(data) {
+  $("#main-selector").html(
+    `<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an
+            option</label>
+
+        <select
+            class="select relative bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            id="season-select">
+
+        </select>
+        <select
+            class="select relative bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            id="episode-select">
+        </select>`
+  );
   var q = 0;
   var html = "";
   data.results.forEach((item) => {
