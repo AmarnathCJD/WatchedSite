@@ -61,5 +61,4 @@ document.addEventListener('DOMContentLoaded', function () {
     if (localStorage.getItem("dark-mode") === "true") {
         enableTheme();
     }
-}
-);
+});
