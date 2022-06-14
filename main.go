@@ -39,10 +39,6 @@ func init() {
 		s := template.Must(template.ParseFiles("signup.html"))
 		s.Execute(w, nil)
 	})
-	http.HandleFunc("/login/", func(w http.ResponseWriter, r *http.Request) {
-		l := template.Must(template.ParseFiles("title_new.html"))
-		l.Execute(w, nil)
-	})
 }
 
 func SearchTmdb(w http.ResponseWriter, r *http.Request) {
@@ -85,10 +81,11 @@ func getMovie(w http.ResponseWriter, r *http.Request) {
 	_url := "https://api.themoviedb.org/3/movie/"
 	_id := r.FormValue("id")
 	params := map[string]string{
-		"api_key":       TMDB_API_KEY,
-		"language":      "en-US",
-		"page":          "1",
-		"include_adult": "false",
+		"api_key":            TMDB_API_KEY,
+		"language":           "en-US",
+		"page":               "1",
+		"include_adult":      "false",
+		"append_to_response": "similar",
 	}
 	resp, err := http.Get(_url + _id + "?" + encodeParams(params))
 	if err != nil {
@@ -100,19 +97,15 @@ func getMovie(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, string(data))
 }
 
-func getSimilarMovie(w http.ResponseWriter, r *http.Request) {
-	_url := "https://api.themoviedb.org/3/movie/"
-	fmt.Println(r.FormValue("id"), _url)
-}
-
 func getTvShow(w http.ResponseWriter, r *http.Request) {
 	_url := "https://api.themoviedb.org/3/tv/"
 	_id := r.FormValue("id")
 	params := map[string]string{
-		"api_key":       TMDB_API_KEY,
-		"language":      "en-US",
-		"page":          "1",
-		"include_adult": "false",
+		"api_key":            TMDB_API_KEY,
+		"language":           "en-US",
+		"page":               "1",
+		"include_adult":      "false",
+		"append_to_response": "similar",
 	}
 	resp, err := http.Get(_url + _id + "?" + encodeParams(params))
 	if err != nil {
