@@ -26,6 +26,7 @@ function enableTheme() {
     nav.classList.replace("bg-red-500", "bg-gray-800");
     footer.classList.replace("bg-gray-100", "bg-gray-800");
     footer_bottom.classList.replace("bg-gray-200", "bg-gray-900");
+    localStorage.setItem("dark-mode", "true");
 }
 
 function disableTheme() {
@@ -42,6 +43,7 @@ function disableTheme() {
     nav.classList.replace("bg-gray-800", "bg-red-500");
     footer.classList.replace("bg-gray-900", "bg-gray-100");
     footer_bottom.classList.replace("bg-gray-900", "bg-gray-200");
+    localStorage.setItem("dark-mode", "false");
 }
 
 function toggleTheme() {
@@ -54,3 +56,10 @@ function toggleTheme() {
 
 
 button.addEventListener('click', toggleTheme);
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (localStorage.getItem("dark-mode") === "true") {
+        enableTheme();
+    }
+}
+);
