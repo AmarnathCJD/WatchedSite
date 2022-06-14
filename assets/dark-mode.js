@@ -11,7 +11,6 @@ const nav = document.getElementById("nav");
 const footer = document.getElementById("footer");
 const footer_bottom = document.getElementById("footer-bottom");
 
-
 function enableTheme() {
     document.body.classList.add("dark-mode");
     document.body.classList.add("bg-gray-700");
@@ -54,10 +53,9 @@ function toggleTheme() {
     }
 }
 
+button.addEventListener("click", toggleTheme);
 
-button.addEventListener('click', toggleTheme);
-
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("dark-mode") === "true") {
         enableTheme();
     }
