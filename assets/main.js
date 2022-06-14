@@ -180,6 +180,8 @@ function setupSeason(data) {
       } text-grey-900" value="${i + 1}">${i + 1}</option>`;
   }
   $("#episode-select").html(html);
+  $("#season-select").on("change", updateEpsidoes);
+  $("#episode-select").on("change", changeStream);
 }
 getShow();
 
@@ -214,6 +216,3 @@ function changeStream() {
     stream
   );
 }
-
-$("#season-select").on("change", updateEpsidoes);
-$("#episode-select").on("change", changeStream);
