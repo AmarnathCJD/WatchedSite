@@ -124,7 +124,7 @@ function getRecommendations(data) {
   var html = "";
   data.results.forEach((item) => {
     if (q < 10) {
-      const url = item.id && item.id > 0 ? "/login/" + item.id + "-" + type : "/login/" + item.name + "-" + type;
+      const url = item.id && item.id > 0 ? "/title/" + item.id + "-" + type : "/title/" + item.name + "-" + type;
       q += 1;
       html += `<div class="w-1/2 md:w-1/2 xl:w-1/5 p-3">`
       html += `<a href="${url}" class="c-card block shadow-md hover:shadow-xl rounded-lg overflow-hidden">`
