@@ -204,12 +204,13 @@ function changeStream() {
   season_id = seasons_.find((item) => {
     return item.name == season;
   }).id;
+  console.log(season_id);
   $("#player").attr(
     "src",
     "https://www.2embed.ru/embed/tmdb/tv?id=" +
     id +
     "&s=" +
-    season +
+    season_id +
     "&e=" +
     stream
   );
