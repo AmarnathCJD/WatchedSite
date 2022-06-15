@@ -205,8 +205,7 @@ function changeStream() {
   var season = document.getElementById("season-select").value;
   season_id = seasons_.find((item) => {
     return item.name == season;
-  }).id;
-  console.log(season_id);
+  }).season_number;
   $("#player").attr(
     "src",
     "https://www.2embed.ru/embed/tmdb/tv?id=" +

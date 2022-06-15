@@ -35,6 +35,10 @@ func init() {
 		title := template.Must(template.ParseFiles("title.html"))
 		title.Execute(w, nil)
 	})
+	http.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
+		title := template.Must(template.ParseFiles("new_index.html"))
+		title.Execute(w, nil)
+	})
 	http.HandleFunc("/signup", func(w http.ResponseWriter, r *http.Request) {
 		s := template.Must(template.ParseFiles("signup.html"))
 		s.Execute(w, nil)
@@ -42,9 +46,16 @@ func init() {
 }
 
 func SearchTmdb(w http.ResponseWriter, r *http.Request) {
-	_url := "https://api.themoviedb.org/3/search/multi"
+	_type := r.FormValue("type")
+	_url_suffix := "/multi"
+	if _type == "movie" {
+		_url_suffix = "/movie"
+	} else if _type == "tv" {
+		_url_suffix = "/tv"
+	}
+	_url := "https://api.themoviedb.org/3/search" + _url_suffix
 	_query := r.FormValue("query")
-	if _query == "Trending" {
+	if _query == "trending" {
 		parseTrending(w, _query)
 		return
 	}

@@ -1,3 +1,5 @@
+<html>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -6,11 +8,21 @@
     <meta name="og:title" content="Watch TV" />
     <meta name="og:description"
         content="Watch the latest movies and TV shows online or offline. Watch anywhere, anytime." />
-    <title>SignUp</title>
+    <title>Watch Shows</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-    <script src="https://cdn.tailwindcss.com/3.1.1"></script>
+    <script src="/assets/tailwind.js"></script>
+    <style>
+        .c-card img {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .c-card:hover img {
+            transform: scale(1.05);
+        }
+    </style>
+
 </head>
 
 <body class="h-full bg-gray-50 antialiased">
@@ -105,60 +117,115 @@
             </div>
         </div>
     </nav>
-    <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md w-full space-y-8">
-            <div>
-                <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                    alt="Workflow" />
-                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Create an account
-                </h2>
-            </div>
-            <form class="mt-8 space-y-6" action="#" method="POST">
-                <input type="hidden" name="remember" value="true" />
-                <div class="rounded-md shadow-sm -space-y-px">
-                    <div>
-                        <label for="email-address" class="sr-only">Email address</label>
-                        <input id="email-address" name="email" type="email" autocomplete="email" required
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                            placeholder="Email address" />
-                    </div>
-                    <div>
-                        <label for="password" class="sr-only">Password</label>
-                        <input id="password" name="password" type="password" autocomplete="current-password" required
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                            placeholder="Password" />
-                    </div>
+    <div class="max-w-7xl bg-white mx-auto py-7 sm:px-6 lg:px-8" id="main-content">
+        <div class="max-w-md mx-auto rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+            <div class="md:flex">
+                <div class="md:shrink-0">
+                    <img class="h-48 w-full object-cover md:h-full md:w-48"
+                        src="https://img.freepik.com/free-vector/colorful-movie-logo_18099-26.jpg?w=1060"
+                        alt="Man looking at item at a store">
                 </div>
+                <div class="p-8">
+                    <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                        <span class="block text-grey-900" id="text-title">WATCH TV</span>
+                        <span class="block text-green-600 text-xl">Powered
+                            by
+                            Go</span>
+                    </h2>
+                    <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"></div>
+                    <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline"></a>
+                    <p class="mt-2 text-slate-500">Millions of movies, TV shows and people to discover. Explore now.</p>
 
-                <div>
-                    <button type="submit"
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                            <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </span>
-                        Sign up
-                    </button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
-    <script>
-        const menu = document.getElementById("mobile-menu");
-        const menuButton = document.getElementById("mobile-menu-toggle");
-        menuButton.addEventListener("click", () => {
-            menu.classList.toggle("hidden");
-        });
-        const userMenu = document.getElementById("user-menu");
-        const userMenuButton = document.getElementById("user-menu-toggle");
-        userMenuButton.addEventListener("click", () => {
-            userMenu.classList.toggle("hidden");
-        });
-    </script>
+    <div class="max-w-7xl mx-auto py-3 sm:px-6 lg:px-8">
+        <div class="flex">
+            <label for="search-dropdown"
+                class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search Query</label>
+            <button id="dropdown-button" data-dropdown-toggle="dropdown"
+                class="flex-shrink-0 z-10 w-1/7 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                type="button">All categories <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clip-rule="evenodd"></path>
+                </svg></button>
+            <div id="dropdown"
+                class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+                data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top"
+                style="position: absolute;transform: translate(150px, 0px);">
+                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
+                    <li>
+                        <button type="button"
+                            class="inline-flex py-2 px-4 w-full hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            id="search-all">All category</button>
+                    </li>
+                    <li>
+                        <button type="button"
+                            class="inline-flex py-2 px-4 w-full hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            id="search-movie">Movie</button>
+                    </li>
+                    <li>
+                        <button type="button"
+                            class="inline-flex py-2 px-4 w-full hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            id="search-tv">TV</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="relative w-full">
+                <input type="search" id="search-dropdown"
+                    class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                    placeholder="Search for a movie, TV show, or person" required>
+                <button type="submit"
+                    class="absolute top-0 right-0 btn inline-block px-4 rounded-r-lg py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"
+                    id="search-submit"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg></button>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto py-3 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap bg-white" id="result-table">
+        </div>
+        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+            <div>
+                <p class="text-sm text-gray-700" id="result-count">
+                    Showing
+                    <span class="font-medium">1</span>
+                    to
+                    <span class="font-medium">10</span>
+                    of
+                    <span class="font-medium">97</span>
+                    results
+                </p>
+            </div>
+            <div id="page"></div>
+        </div>
+    </div>
+
+    <footer class="p-4 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800" id="footer">
+        <span class="text-sm text-gray-500 sm:text-center" id="footer-span">© 2022 <a href="https://t.me/roseloverx"
+                class="hover:underline">RoseLoverX™</a>. All Rights Reserved.
+        </span>
+        <ul class="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0" id="footer-text">
+            <li>
+                <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+            </li>
+            <li>
+                <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+            </li>
+            <li>
+                <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
+            </li>
+            <li>
+                <a href="#" class="hover:underline">Contact</a>
+            </li>
+        </ul>
+    </footer>
+    <script src="/assets/app.js"></script>
+    <script src="/assets/dark-mode.js"></script>
 </body>

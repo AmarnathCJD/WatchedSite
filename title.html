@@ -55,6 +55,15 @@
                             <a href="#"
                                 class="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Top
                                 IMDB</a>
+                            <button type="button" id="dark-mode-top"
+                                class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-moon-stars-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+                                    <path
+                                        d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+                                </svg></button>
                         </div>
                     </div>
                 </div>
@@ -99,6 +108,9 @@
                 <a href="#"
                     class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Top
                     IMDB</a>
+                <button type="button" id="dark-mode-sm"
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Dark
+                    Mode</button>
             </div>
         </div>
     </nav>
@@ -107,102 +119,106 @@
             <h1 class="font-bold text-gray-900 text-xl" id="main-title"></h1>
         </div>
     </header>
-    <main id="main-content" class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <main id="main-content" class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+        <div class="max-w-full mx-auto sm:px-6 lg:px-8 border-20">
             <div class="px-5 py-6 sm:px-0">
-                <div class="border-20 border-gray-200 rounded-lg h-2/3 w-full">
-                    <iframe src="" width="100%" height="100%" frameborder="0" style="border: 0" allowfullscreen=""
+                <div class="border-20 border-gray-200 rounded-lg w-full shadow-lg h-2/3">
+                    <iframe src="" width="100%" height="100%" scrolling="no" frameborder="0" src=""
+                        allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
                         aria-hidden="false" tabindex="0" id="player"></iframe>
                 </div>
             </div>
-        </div>
-        <div id="main-selector"></div>
-        <div class="text-sm condent-end">
-            <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
-                Episode Selector Update Soon!
-            </a>
-        </div>
-        <div class="w-full lg:max-w-full lg:flex py-3">
-            <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-                title="poster"><img class="object-cover h-full w-full rounded-t" src="" alt="" id="poster"></div>
-            <div class="border-l border-gray-300 lg:border-0 lg:border-l-2 lg:border-gray-200 rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal"
-                id="info-box">
-                <div class="mb-8" id="info-title">
-                    <p class="text-gray-900 font-bold text-xl mb-2" id="title-div">
-                        <span id="title"></span>
-                    </p>
-                    <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
-                        <div class="mt-2 flex items-center text-sm text-gray-500">
-                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20" fill="blue" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span id="release-date"></span>
+            <div id="main-selector"></div>
+            <div class="text-sm condent-end">
+                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    Episode Selector Update Soon!
+                </a>
+            </div>
+            <div class="w-full lg:max-w-full lg:flex py-3">
+                <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+                    title="poster"><img class="object-cover h-full w-full rounded" src="" alt="" id="poster"></div>
+                <div class="border-l border-gray-300 lg:border-0 lg:border-l-2 lg:border-gray-200 rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal"
+                    id="info-box">
+                    <div class="mb-8" id="info-title">
+                        <p class="text-gray-900 font-bold text-xl mb-2" id="title-div">
+                            <span id="title"></span>
+                        </p>
+                        <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
+                            <div class="mt-2 flex items-center text-sm text-gray-500">
+                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="blue"
+                                    aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span id="release-date"></span>
+                            </div>
+                            <div class="mt-2 flex items-center text-sm text-gray-500">
+                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="green"
+                                    aria-hidden="true">
+                                    <path
+                                        d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span id="revenue"></span>
+                            </div>
                         </div>
-                        <div class="mt-2 flex items-center text-sm text-gray-500">
-                            <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20" fill="green" aria-hidden="true">
-                                <path
-                                    d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
-                                <path fill-rule="evenodd"
-                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <span id="revenue"></span>
+                        <p class="text-gray-700 text-base">
+                        <p class="text-gray-700 text-base" id="description"></p>
+                        </p>
+                        <div class="py-1">
+                            <p class="text-gray-700 text-base" id="genres"></p>
                         </div>
-                    </div>
-                    <p class="text-gray-700 text-base">
-                    <p class="text-gray-700 text-base" id="description"></p>
-                    </p>
-                    <div class="py-1">
-                        <p class="text-gray-700 text-base" id="genres"></p>
-                    </div>
-                    <div class="columns-2 py-0.5" style="margin-top: 2px;" id="title-cast">
-                        <div class="column ">
-                            <p><b class="text-gray-500 text-sm">Runtime:</b> <span id="runtime" class="text-sm"></span>
-                            </p>
-                        </div>
-                        <div class="column">
-                            <p><b class="text-gray-500 text-sm">Rating:</b> <span
-                                    class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-white bg-yellow-400 uppercase last:mr-0 mr-1"
-                                    id="rating"></span></p>
-                        </div>
-                        <div class="column">
-                            <p><b class="text-gray-500 text-sm">Language:</b> <span id="language"
-                                    class="text-sm"></span></p>
-                        </div>
-                        <div class="column">
-                            <p><b class="text-gray-500 text-sm">Country:</b> <span id="country" class="text-sm"></span>
-                            </p>
-                        </div>
-                        <div class="column">
-                            <p><b class="text-gray-500 text-sm">Production:</b> <span id="production"
-                                    class="text-sm"></span></p>
-                        </div>
-                        <div class="column" id="nw">
-                            <p><b class="text-gray-500 text-sm">Networks:</b> <span id="networks"
-                                    class="text-sm"></span></p>
+                        <div class="columns-2 py-0.5" style="margin-top: 2px;" id="title-cast">
+                            <div class="column ">
+                                <p><b class="text-gray-500 text-sm">Runtime:</b> <span id="runtime"
+                                        class="text-sm"></span>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <p><b class="text-gray-500 text-sm">Rating:</b> <span
+                                        class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-white bg-yellow-400 uppercase last:mr-0 mr-1"
+                                        id="rating"></span></p>
+                            </div>
+                            <div class="column">
+                                <p><b class="text-gray-500 text-sm">Language:</b> <span id="language"
+                                        class="text-sm"></span></p>
+                            </div>
+                            <div class="column">
+                                <p><b class="text-gray-500 text-sm">Country:</b> <span id="country"
+                                        class="text-sm"></span>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <p><b class="text-gray-500 text-sm">Production:</b> <span id="production"
+                                        class="text-sm"></span></p>
+                            </div>
+                            <div class="column" id="nw">
+                                <p><b class="text-gray-500 text-sm">Networks:</b> <span id="networks"
+                                        class="text-sm"></span></p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <hr class="border-b border-gray-400 my-6 border-grid grid-cols-2 gap-2">
-            <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
-                <div class="flex items-start justify-center">
-                    <div class="inline-flex shadow-md hover:shadow-lg focus:shadow-lg" role="group">
-                        <button type="button"
-                            class="rounded-l inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase hover:bg-red-700 focus:bg-red-700 focus:outline-none focus:ring-0 active:bg-red-800 transition duration-150 ease-in-out">Watchlist</button>
-                        <button type="button" id="dark-mode"
-                            class=" rounded-r inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-moon-stars-fill" viewBox="0 0 16 16">
-                                <path
-                                    d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
-                                <path
-                                    d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
-                            </svg></button>
+                <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
+                    <div class="flex items-start justify-center">
+                        <div class="inline-flex shadow-md hover:shadow-lg focus:shadow-lg" role="group">
+                            <button type="button"
+                                class="rounded-l inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase hover:bg-red-700 focus:bg-red-700 focus:outline-none focus:ring-0 active:bg-red-800 transition duration-150 ease-in-out">Watchlist</button>
+                            <button type="button" id="dark-mode"
+                                class=" rounded-r inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-moon-stars-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+                                    <path
+                                        d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+                                </svg></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -224,25 +240,24 @@
     </main>
     <script src="/assets/main.js"></script>
 
-    <footer class="text-center lg:text-left bg-gray-100 text-gray-600" id="footer">
-        <div class="flex justify-center items-center lg:justify-between p-6 border-b border-gray-300">
-            <div class="mr-12 hidden lg:block">
-                <span>Get connected with us on social networks:</span>
-            </div>
-            <div class="flex justify-center">
-                <a href="https://t.me/roseloverx_support" class="mr-6 text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-telegram"
-                        viewBox="0 0 16 16">
-                        <path
-                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z" />
-                    </svg>
-                </a>
-            </div>
-        </div>
-        <div class="text-center p-6 bg-gray-200" id="footer-bottom">
-            <span>© 2022 Copyright:</span>
-            <a class="text-gray-600 font-semibold" href="https://t.me/roseloverx">RoseLoverX</a>
-        </div>
+    <footer class="p-4 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800" id="footer">
+        <span class="text-sm text-gray-500 sm:text-center" id="footer-span">© 2022 <a href="https://t.me/roseloverx"
+                class="hover:underline">RoseLoverX™</a>. All Rights Reserved.
+        </span>
+        <ul class="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0" id="footer-text">
+            <li>
+                <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+            </li>
+            <li>
+                <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+            </li>
+            <li>
+                <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
+            </li>
+            <li>
+                <a href="#" class="hover:underline">Contact</a>
+            </li>
+        </ul>
     </footer>
     <script src="/assets/dark-mode.js"></script>
 </body>
