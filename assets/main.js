@@ -87,7 +87,9 @@ function getShow() {
           : data.episode_run_time[0] + " min"
       );
       $("#language").text(String(data.original_language).toUpperCase());
-      $("#country").text(data.production_countries[0].name);
+      if (data.production_countries.length > 0) {
+        $("#country").text(data.production_countries[0].name);
+      }
       $("#production").html(
         data.production_companies
           .map((company) => {
