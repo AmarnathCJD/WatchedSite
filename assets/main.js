@@ -2,6 +2,7 @@ const show = window.location.href.split("/").pop();
 const id = show.split("-")[0];
 const type = show.split("-")[1];
 var seasons_ = null;
+var current_episode = 1
 
 const menu = document.getElementById("mobile-menu");
 const menuButton = document.getElementById("mobile-menu-toggle");
@@ -119,6 +120,7 @@ function getShow() {
       if (type !== "movie") {
         seasons_ = data.seasons;
         setupSeason(data);
+        setupEpisodeTable(data.seasons);
       }
     },
   });
@@ -150,18 +152,14 @@ function getRecommendations(data) {
 
 function setupSeason(data) {
   $("#main-selector").html(
-    `<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an
-            option</label>
+    `<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select Season</label>
 
         <select
             class="select relative bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             id="season-select">
 
         </select>
-        <select
-            class="select relative bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            id="episode-select">
-        </select>`
+        <div id="episode-table"></div>`
   );
   var seasons = data.seasons;
   var html = ``;
@@ -172,38 +170,59 @@ function setupSeason(data) {
     }
   });
   $("#season-select").html(html);
-  html = ``;
-  season = seasons[0];
-  if (season.name == "Specials") {
-    season = seasons[1];
-  }
-  for (var i = 0; i < season.episode_count; i++) {
-    html += `<option class="option ${i == 0 ? "active" : ""
-      } text-grey-900" value="${i + 1}">${i + 1}</option>`;
-  }
-  $("#episode-select").html(html);
   $("#season-select").on("change", updateEpsidoes);
-  $("#episode-select").on("change", changeStream);
 }
+
+function setupEpisodeTable(data, season) {
+  var html = ``;
+  html += `<div class="flex flex-wrap">`;
+  if (season == undefined) {
+    season = data[0];
+    if (season.name == "Specials") {
+      season = data[1];
+    }
+  } else {
+    season = data.find((item) => {
+      return item.name == season;
+    });
+  }
+  for (let i = 1; i <= season.episode_count; i++) {
+    html += `<div class="w-1/2 md:w-1/2 xl:w-1/6 p-3">`;
+    html += `<button href="#" class="c-card block shadow-md hover:shadow-xl rounded-lg overflow-hidden ${"bg-red-600 text-white" && i == 1 ? "bg-red-600 text-white" : "bg-gray-100"} py-1 sm:px-10 px-3" id="episode-${i}">`;
+    html += `<h2 class="mt-2 mb-2 font-bold">Episode ${i}</h2>`;
+    html += `</button></div>`;
+  }
+  html += `</div>`;
+  $("#episode-table").html(html);
+  current_episode = 1;
+  for (let i = 1; i <= season.episode_count; i++) {
+    $("#episode-" + i).on("click", () => {
+      $("#episode-select").val(i);
+      changeStream(i);
+      var activeButton = document.getElementById("episode-" + current_episode);
+      activeButton.classList.remove("bg-red-600");
+      activeButton.classList.remove("bg-red-600");
+      activeButton.classList.toggle("text-white");
+      var thisButton = document.getElementById("episode-" + i);
+      thisButton.classList.remove("bg-gray-100");
+      thisButton.classList.add("bg-red-600");
+      thisButton.classList.toggle("text-white");
+      current_episode = i;
+    }
+    );
+  }
+}
+
+
 getShow();
 
 function updateEpsidoes() {
   var season = document.getElementById("season-select").value;
-  season = seasons_.find((item) => {
-    return item.name == season;
-  });
-  console.log(season);
-  var html = ``;
-  for (var i = 0; i < season.episode_count; i++) {
-    html += `<option class="option ${i == 0 ? "active" : ""
-      } text-grey-900" value="${i + 1}">${i + 1}</option>`;
-  }
-  $("#episode-select").html(html);
-  changeStream();
+  setupEpisodeTable(seasons_, season);
+  changeStream(1);
 }
 
-function changeStream() {
-  var stream = document.getElementById("episode-select").value;
+function changeStream(stream) {
   var season = document.getElementById("season-select").value;
   season_id = seasons_.find((item) => {
     return item.name == season;

@@ -55,9 +55,9 @@ function searchTitle() {
 function updateResultTable(data) {
     var table = '';
     data.results.forEach(item => {
-        var html = `<div class="w-full sm:w-1/2 md:w-1/2 xl:w-1/5 p-4">
+        var html = `<div class="w-full sm:w-1/2 md:w-1/2 xl:w-1/5 p-4" id="${item.id}">
         <a href="/title/${item.id}-${item.media_type}" class="c-card block bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden">
-            <div class="relative pb-48 overflow-hidden">
+            <div class="relative pb-64 sm:pb-52 xl:pb-64 md:pb-60 overflow-hidden">
             <img class="absolute inset-0 h-full w-full object-cover"
                 src="https://image.tmdb.org/t/p/w500/${item.poster_path}"
                 alt="">
@@ -131,7 +131,69 @@ function page_list(firstPages, page, lastPages, totalPages) {
     return page_list;
 }
 
+function typeAhead() {
+    query = $('#search-dropdown').val();
+    console.log(query);
+    if (query.length > 0 && query.length % 2 === 0) {
+        $.ajax({
+            url: `/autocomplete?query=${query}`,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                var html = '';
+                data.forEach(item => {
+                    html += `<li>
+                    <button type="button"
+                        class="inline-flex py-2 px-4 w-full hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        id="search-all">${item.label}</button>
+                </li>`
+                })
+                $('#type-ahead-list').html(html);
+                if (document.getElementById('type-ahead-list').classList.contains('hidden')) {
+                    $('#type-ahead-list').toggleClass('hidden');
+                }
+                for (var i = 0; i < data.length; i++) {
+                    $('#type-ahead-list').children().eq(i).click(function () {
+                        $('#search-dropdown').val($(this).text().trim());
+                        $('#type-ahead-list').addClass('hidden');
+                        $('#search-dropdown').focus();
+                        searchTitle();
+                    })
+                }
+            }
+        })
+    }
+}
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    $('#search-dropdown').on('keyup', typeAhead);
+})
+
+$('body').click(function (e) {
+    if (!$(e.target).closest('#type-ahead-list').length) {
+        $("#type-ahead-list").addClass('hidden');
+    }
+});
+
+$("#dark-mode-top").mouseover(function () {
+    $("#dark-mode-top").text("Not Implemented");
+})
+$("#dark-mode-top").mouseout(function () {
+    $("#dark-mode-top").html(`<svg
+    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+    class="bi bi-moon-stars-fill" viewBox="0 0 16 16">
+    <path
+        d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+    <path
+        d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+</svg>`)
+})
+
+$("#mobile-menu-toggle").click(function () {
+    $("#mobile-menu").toggleClass("hidden");
+})
 
 searchTitle();
+
+

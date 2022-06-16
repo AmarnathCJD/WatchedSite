@@ -1,12 +1,14 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 )
 
 const (
@@ -31,12 +33,13 @@ func init() {
 	http.HandleFunc("/search", SearchTmdb)
 	http.HandleFunc("/search/movie", getMovie)
 	http.HandleFunc("/search/tv", getTvShow)
+	http.HandleFunc("/autocomplete", AutoComplete)
 	http.HandleFunc("/title/", func(w http.ResponseWriter, r *http.Request) {
 		title := template.Must(template.ParseFiles("title.html"))
 		title.Execute(w, nil)
 	})
 	http.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
-		title := template.Must(template.ParseFiles("new_index.html"))
+		title := template.Must(template.ParseFiles("index.html"))
 		title.Execute(w, nil)
 	})
 	http.HandleFunc("/signup", func(w http.ResponseWriter, r *http.Request) {
@@ -126,6 +129,40 @@ func getTvShow(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 	data, _ := ioutil.ReadAll(resp.Body)
 	fmt.Fprint(w, string(data))
+}
+
+func AutoComplete(w http.ResponseWriter, r *http.Request) {
+	_query := r.FormValue("query")
+	if _query == "" {
+		fmt.Fprint(w, "")
+		return
+	}
+	_firstLetter := strings.ToLower(_query[0:1])
+	_url := "https://v2.sg.media-imdb.com/suggestion/titles/" + _firstLetter + "/" + url.QueryEscape(_query) + ".json"
+	resp, err := http.Get(_url)
+	if err != nil {
+		fmt.Fprintf(w, "Error: %s", err)
+		return
+	}
+	defer resp.Body.Close()
+	var data struct {
+		D []struct {
+			I struct {
+				ImageURL string
+			}
+			L string
+		}
+	}
+	json.NewDecoder(resp.Body).Decode(&data)
+	var result []map[string]string
+	for _, v := range data.D {
+		result = append(result, map[string]string{
+			"image": v.I.ImageURL,
+			"label": v.L,
+		})
+	}
+	d, _ := json.Marshal(result)
+	fmt.Fprint(w, string(d))
 }
 
 func encodeParams(params map[string]string) string {
