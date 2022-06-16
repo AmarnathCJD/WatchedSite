@@ -55,9 +55,9 @@ function searchTitle() {
 function updateResultTable(data) {
     var table = '';
     data.results.forEach(item => {
-        var html = `<div class="w-full sm:w-1/2 md:w-1/2 xl:w-1/5 p-4" id="${item.id}">
+        var html = `<div class="w-1/2 sm:w-1/2 md:w-1/3 xl:w-1/5 p-4" id="${item.id}">
         <a href="/title/${item.id}-${item.media_type}" class="c-card block bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden">
-            <div class="relative pb-64 sm:pb-52 xl:pb-64 md:pb-60 overflow-hidden">
+            <div class="relative pb-64 sm:pb-64 xl:pb-64 md:pb-60 overflow-hidden">
             <img class="absolute inset-0 h-full w-full object-cover"
                 src="https://image.tmdb.org/t/p/w500/${item.poster_path}"
                 alt="">
