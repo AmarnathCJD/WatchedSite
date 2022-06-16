@@ -187,7 +187,7 @@ function setupEpisodeTable(data, season) {
     });
   }
   for (let i = 1; i <= season.episode_count; i++) {
-    html += `<div class="w-1/3 md:w-1/2 xl:w-1/6 p-3">`;
+    html += `<div class="w-1/3 md:w-1/3 xl:w-1/6 p-3">`;
     html += `<button href="#" class="c-card block shadow-md hover:shadow-xl rounded-lg overflow-hidden ${"bg-red-600 text-white" && i == 1 ? "bg-red-600 text-white" : "bg-gray-100"} py-1 sm:px-10 px-3" id="episode-${i}">`;
     html += `<h2 class="mt-2 mb-2 font-bold">Episode ${i}</h2>`;
     html += `</button></div>`;
