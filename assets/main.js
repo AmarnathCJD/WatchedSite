@@ -3,6 +3,13 @@ const id = show.split("-")[0];
 const type = show.split("-")[1];
 var seasons_ = null;
 var current_episode = 1
+var movieSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-film" viewBox="0 0 16 16">
+<path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm4 0v6h8V1H4zm8 8H4v6h8V9zM1 1v2h2V1H1zm2 3H1v2h2V4zM1 7v2h2V7H1zm2 3H1v2h2v-2zm-2 3v2h2v-2H1zM15 1h-2v2h2V1zm-2 3v2h2V4h-2zm2 3h-2v2h2V7zm-2 3v2h2v-2h-2zm2 3h-2v2h2v-2z"/>
+</svg>`
+const tvSVG = `
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tv-fill" viewBox="0 0 16 16">
+  <path d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zM2 2h12s2 0 2 2v6s0 2-2 2H2s-2 0-2-2V4s0-2 2-2z"/>
+</svg>`
 
 const menu = document.getElementById("mobile-menu");
 const menuButton = document.getElementById("mobile-menu-toggle");
@@ -116,6 +123,9 @@ function getShow() {
       } else {
         $("#networks").html("N/A");
       }
+      if (data.casts.cast.length !== 0) {
+        $("#casts").html(getCasts(data.casts.cast));
+      }
       getRecommendations(data.similar);
       if (type !== "movie") {
         seasons_ = data.seasons;
@@ -126,22 +136,40 @@ function getShow() {
   });
 }
 
+function getCasts(casts) {
+  var q = 0
+  var cast = ''
+  for (var i = 0; i < casts.length; i++) {
+    if (q > 5) {
+      break;
+    }
+    q++;
+    cast += `${casts[i].name}` + `, `
+  }
+  cast = cast.replace(/,\s*$/, "");
+  return cast;
+}
+
 function getRecommendations(data) {
   var q = 0;
   var html = "";
   data.results.forEach((item) => {
     if (q < 10) {
-      const url =
-        item.id && item.id > 0
-          ? "/title/" + item.id + "-" + type
-          : "/title/" + item.name + "-" + type;
+      const url = "/title/" + item.id + "-" + type;
+      var icon = movieSVG
+      if (type == "tv") {
+        icon = tvSVG
+      }
+      var release_date = item.release_date && item.release_date.length > 0
+        ? item.release_date
+        : item.first_air_date;
       q += 1;
-      html += `<div class="w-1/2 md:w-1/2 xl:w-1/5 p-3">`;
+      html += `<div class="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-3">`;
       html += `<a href="${url}" class="c-card block shadow-md hover:shadow-xl rounded-lg overflow-hidden">`;
-      html += `<div class="relative pb-48 overflow-hidden">`;
-      html += `<img class="absolute inset-0 h-full w-full object-cover"src="https://image.tmdb.org/t/p/w500/${item.poster_path}"alt=""></div>`;
+      html += `<div class="relative overflow-hidden">`;
+      html += `<img class="h-auto w-auto object-cover"src="https://image.tmdb.org/t/p/w500/${item.poster_path}"alt=""></div>`;
       html += `<div class="p-4" id="rec">`;
-      html += `<span class="inline-block px-2 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs">Highlight 2022</span><h2 class="mt-2 mb-2 font-bold">${trimTitle(
+      html += `<span class="inline-block leading-none rounded-full font-semibold uppercase tracking-wide text-xs">(${release_date})</span><h2 class="mt-2 mb-2 font-bold text-sm">${trimTitle(
         item
       )}</h2>`;
       html += `</div></a></div>`;
