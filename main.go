@@ -99,7 +99,7 @@ func getMovie(w http.ResponseWriter, r *http.Request) {
 		"language":           "en-US",
 		"page":               "1",
 		"include_adult":      "false",
-		"append_to_response": "similar,casts",
+		"append_to_response": "similar,credits",
 	}
 	resp, err := http.Get(_url + _id + "?" + encodeParams(params))
 	if err != nil {
@@ -119,7 +119,7 @@ func getTvShow(w http.ResponseWriter, r *http.Request) {
 		"language":           "en-US",
 		"page":               "1",
 		"include_adult":      "false",
-		"append_to_response": "similar,casts",
+		"append_to_response": "similar,credits,episode_groups",
 	}
 	resp, err := http.Get(_url + _id + "?" + encodeParams(params))
 	if err != nil {

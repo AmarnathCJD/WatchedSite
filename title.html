@@ -24,7 +24,7 @@
 </head>
 
 <body class="h-full bg-gray-50 antialiased">
-    <nav class="bg-indigo-900" id="nav">
+    <nav class="bg-gray-700" id="nav">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             <div class="relative flex items-center justify-between h-16">
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -43,97 +43,64 @@
                         </svg>
                     </button>
                 </div>
-                <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+                <div class="flex items-center justify-center sm:items-stretch sm:justify-start items-end">
                     <div class="flex-shrink-0 flex items-center">
-                        <h1 class="text-white text-base font-bold tracking-tight leading-tight">Watch TV</h1>
+                        <h1 class="text-white text-base font-bold tracking-tight leading-tight invisible sm:visible">
+                            Watch TV</h1>
                     </div>
                     <div class="hidden sm:block sm:ml-6">
-                        <div class="flex space-x-4">
-
+                        <div class="flex">
                             <a href="#" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
                                 aria-current="page">Dashboard</a>
-
                             <a href="/"
                                 class="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
-
                             <a href="#"
                                 class="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Genre</a>
-
-                            <a href="#"
-                                class="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Top
-                                IMDB</a>
-                            <button type="button" id="dark-mode-top"
-                                class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-moon-stars-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
-                                    <path
-                                        d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
-                                </svg></button>
-
-                            <div>
+                            <div class="flex-1 lg:ml-36 ml-24 relative lg:w-96 w-48">
+                                <input type="search" id="search-dropdown"
+                                    class="rounded-lg block p-2 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                                    placeholder="Search for a movie, TV show, or person" required autocomplete="off">
+                                <div id="type-ahead-dropdown"
+                                    class="z-10 w-full bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+                                    style="position: absolute;">
+                                    <ul class="hidden py-1 text-sm text-gray-700 dark:text-gray-200"
+                                        aria-labelledby="search-dropdown" id="type-ahead-list">
+                                    </ul>
+                                </div>
+                                <div id="suggest-dropdown"
+                                    class="hidden z-10 w-full bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+                                    style="position: absolute;">
+                                    <ul class="hidden py-1 text-sm text-gray-700 dark:text-gray-200"
+                                        aria-labelledby="search-dropdown" id="type-ahead-list">
+                                    </ul>
+                                </div>
+                                <button type="submit"
+                                    class="absolute block z-20 p-2 top-0 right-0 btn inline-block px-4 rounded-r-lg bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-red-600 hover:shadow-xl focus:bg-red-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"
+                                    id="search-submit"><svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg></button>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    <div class="">
-                        <div class="relative w-full">
-                            <input type="search" id="search-dropdown"
-                                class="block p-2 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
-                                placeholder="Search for a movie, TV show, or person" required autocomplete="off">
-                            <div id="type-ahead-dropdown"
-                                class="z-10 w-full bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
-                                style="position: absolute;">
-                                <ul class="hidden py-1 text-sm text-gray-700 dark:text-gray-200"
-                                    aria-labelledby="search-dropdown" id="type-ahead-list">
-                                </ul>
-                            </div>
-                            <button type="submit"
-                                class="absolute top-0 right-0 btn inline-block px-4 rounded-r-lg py-2 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"
-                                id="search-submit"><svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                </svg></button>
-                        </div>
-                    </div>
-                    <div class="ml-3 relative">
-
-                        <div>
-                            <button type="button"
-                                class="bg-red-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-800 focus:ring-red"
-                                aria-expanded="false" aria-haspopup="true" id="user-menu-toggle">
-                                <span class="sr-only">Open user menu</span>
-                                <img class="h-8 w-8 rounded-full"
-                                    src="https://img.icons8.com/color/48/undefined/circled-user-female-skin-type-1-2--v1.png"
-                                    alt="" />
-                            </button>
-                        </div>
-                        <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
-                            role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1"
-                            id="user-menu">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                id="user-menu-item-0">Your Profile</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                id="user-menu-item-1">Settings</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                id="user-menu-item-2">Sign out</a>
-                        </div>
+                    <div
+                        class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                        <p class="text-white text-base font-bold tracking-tight leading-tight visible sm:invisible">
+                            Watch TV
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-
-
         <div class="sm:hidden hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
-                    aria-current="page">Dashboard</a>
+                <a href="#"
+                    class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Dashboard</a>
 
                 <a href="#"
-                    class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                    aria-current="page">Home</a>
 
                 <a href="#"
                     class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Genre</a>
@@ -146,31 +113,34 @@
             </div>
         </div>
     </nav>
-    <header class="bg-white shadow dark:bg-slate-800" id="header-main">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 class="font-bold text-gray-900 text-xl" id="main-title"></h1>
+    <header class="bg-white" id="header-main">
+        <div class="mx-auto p-3 sm:px-6 lg:px-8 w-auto">
+            <h1 class="font-bold text-gray-900 text-lg text-center" id="main-title"></h1>
         </div>
     </header>
     <main id="main-content" class="container xl:max-w-full mx-auto py-10 sm:px-6 lg:px-8">
         <div class="max-w-full mx-auto sm:px-6 lg:px-8 border-20">
             <div class="rounded-xl">
-                <div class="border-20 border-gray-200 rounded-lg w-full shadow-lg ">
-                    <iframe src="" width="100%" height="100%" scrolling="no" frameborder="0" src=""
+                <div class="border-20 border-gray-200 rounded-lg w-full shadow-lg h-1/2 xl:h-auto">
+                    <iframe src="" width="100%" height="90%" scrolling="no" frameborder="0" src=""
                         allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
                         aria-hidden="false" tabindex="0" id="player"></iframe>
                 </div>
             </div>
             <div class="container">
                 <div class="max-w-7xl mx-auto py-4 px-2 sm:px-2 lg:px-4 shadow overflow-hidden sm:rounded-lg">
-                    <div id="main-selector"></div>
-                    <div class="w-full lg:max-w-full lg:flex py-3">
-                        <div class="p-2 h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-                            title="poster"><img class="w-full" src="https://via.placeholder.com/160" alt="" id="poster">
+                    <div id="main-selector" class="container bg-gray-100 rounded-lg  p-3">
+                    </div>
+                    <div class="container bg-gray-100 rounded-lg  p-3 w-full lg:max-w-full lg:flex py-3">
+                        <div class="p-2 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+                            title="poster">
+                            <div class="h-48"><img class="w-full" src="https://via.placeholder.com/160" alt=""
+                                    id="poster"></div>
                         </div>
-                        <div class="rounded-b lg:rounded-b-none lg:rounded-r p-6 flex flex-col justify-between leading-normal"
+                        <div class="rounded-xl lg:rounded-b-none lg:rounded-r p-1 flex flex-col justify-between leading-normal"
                             id="info-box">
                             <div class="mb-8 p-4" id="info-title">
-                                <p class="text-gray-900 font-bold text-xl mb-2" id="title-div">
+                                <p class="text-gray-900 font-bold text-2xl" id="title-div">
                                     <span id="title"></span>
                                 </p>
                                 <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
@@ -238,14 +208,32 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                         <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
                             <div class="flex items-start justify-center">
+                                <button type="button"
+                                    class="rounded-l inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase hover:bg-green-700 focus:bg-green-700 focus:outline-none focus:ring-0 active:bg-green-800 transition duration-150 ease-in-out">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-hand-thumbs-up" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2.144 2.144 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a9.84 9.84 0 0 0-.443.05 9.365 9.365 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111L8.864.046zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a8.908 8.908 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.224 2.224 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.866.866 0 0 1-.121.416c-.165.288-.503.56-1.066.56z" />
+                                    </svg>
+                                </button>
+                                <button type="button"
+                                    class="inline-block px-6 py-2.5 bg-gray-500 text-white font-medium text-xs leading-tight uppercase hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-0 active:bg-gray-800 transition duration-150 ease-in-out">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-hand-thumbs-down-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M6.956 14.534c.065.936.952 1.659 1.908 1.42l.261-.065a1.378 1.378 0 0 0 1.012-.965c.22-.816.533-2.512.062-4.51.136.02.285.037.443.051.713.065 1.669.071 2.516-.211.518-.173.994-.68 1.2-1.272a1.896 1.896 0 0 0-.234-1.734c.058-.118.103-.242.138-.362.077-.27.113-.568.113-.856 0-.29-.036-.586-.113-.857a2.094 2.094 0 0 0-.16-.403c.169-.387.107-.82-.003-1.149a3.162 3.162 0 0 0-.488-.9c.054-.153.076-.313.076-.465a1.86 1.86 0 0 0-.253-.912C13.1.757 12.437.28 11.5.28H8c-.605 0-1.07.08-1.466.217a4.823 4.823 0 0 0-.97.485l-.048.029c-.504.308-.999.61-2.068.723C2.682 1.815 2 2.434 2 3.279v4c0 .851.685 1.433 1.357 1.616.849.232 1.574.787 2.132 1.41.56.626.914 1.28 1.039 1.638.199.575.356 1.54.428 2.591z" />
+                                    </svg>
+                                </button>
                                 <div class="inline-flex shadow-md hover:shadow-lg focus:shadow-lg" role="group">
                                     <button type="button"
-                                        class="rounded-l inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase hover:bg-red-700 focus:bg-red-700 focus:outline-none focus:ring-0 active:bg-red-800 transition duration-150 ease-in-out">Watchlist</button>
+                                        class="inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase hover:bg-red-700 focus:bg-red-700 focus:outline-none focus:ring-0 active:bg-red-800 transition duration-150 ease-in-out">Watchlist</button>
+
                                     <button type="button" id="dark-mode"
-                                        class=" rounded-r inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out"><svg
+                                        class="rounded-r inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out"><svg
                                             xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-moon-stars-fill" viewBox="0 0 16 16">
                                             <path
@@ -295,7 +283,6 @@
             </li>
         </ul>
     </footer>
-    <script src="/assets/dark-mode.js"></script>
 </body>
 
 </html>

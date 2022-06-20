@@ -2,24 +2,12 @@ const show = window.location.href.split("/").pop();
 const id = show.split("-")[0];
 const type = show.split("-")[1];
 var seasons_ = null;
-var current_episode = 1
-var movieSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-film" viewBox="0 0 16 16">
-<path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm4 0v6h8V1H4zm8 8H4v6h8V9zM1 1v2h2V1H1zm2 3H1v2h2V4zM1 7v2h2V7H1zm2 3H1v2h2v-2zm-2 3v2h2v-2H1zM15 1h-2v2h2V1zm-2 3v2h2V4h-2zm2 3h-2v2h2V7zm-2 3v2h2v-2h-2zm2 3h-2v2h2v-2z"/>
-</svg>`
-const tvSVG = `
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tv-fill" viewBox="0 0 16 16">
-  <path d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zM2 2h12s2 0 2 2v6s0 2-2 2H2s-2 0-2-2V4s0-2 2-2z"/>
-</svg>`
+var current_episode = 1;
 
 const menu = document.getElementById("mobile-menu");
 const menuButton = document.getElementById("mobile-menu-toggle");
 menuButton.addEventListener("click", () => {
   menu.classList.toggle("hidden");
-});
-const userMenu = document.getElementById("user-menu");
-const userMenuButton = document.getElementById("user-menu-toggle");
-userMenuButton.addEventListener("click", () => {
-  userMenu.classList.toggle("hidden");
 });
 
 function convertToCurrency(labelValue) {
@@ -123,13 +111,15 @@ function getShow() {
       } else {
         $("#networks").html("N/A");
       }
-      if (data.casts.cast.length !== 0) {
-        $("#casts").html(getCasts(data.casts.cast));
+      if (data.credits != undefined) {
+        if (data.credits.cast.length !== 0) {
+          $("#casts").html(getCasts(data.credits.cast));
+        }
       }
       getRecommendations(data.similar);
       if (type !== "movie") {
         seasons_ = data.seasons;
-        setupSeason(data);
+        writeSeason(data);
         setupEpisodeTable(data.seasons);
       }
     },
@@ -137,14 +127,14 @@ function getShow() {
 }
 
 function getCasts(casts) {
-  var q = 0
-  var cast = ''
+  var q = 0;
+  var cast = "";
   for (var i = 0; i < casts.length; i++) {
     if (q > 5) {
       break;
     }
     q++;
-    cast += `${casts[i].name}` + `, `
+    cast += `${casts[i].name}` + `, `;
   }
   cast = cast.replace(/,\s*$/, "");
   return cast;
@@ -156,13 +146,10 @@ function getRecommendations(data) {
   data.results.forEach((item) => {
     if (q < 10) {
       const url = "/title/" + item.id + "-" + type;
-      var icon = movieSVG
-      if (type == "tv") {
-        icon = tvSVG
-      }
-      var release_date = item.release_date && item.release_date.length > 0
-        ? item.release_date
-        : item.first_air_date;
+      var release_date =
+        item.release_date && item.release_date.length > 0
+          ? item.release_date
+          : item.first_air_date;
       q += 1;
       html += `<div class="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-3">`;
       html += `<a href="${url}" class="c-card block shadow-md hover:shadow-xl rounded-lg overflow-hidden">`;
@@ -178,27 +165,38 @@ function getRecommendations(data) {
   $("#suggest").html(`<div class="flex flex-wrap">` + html + "</div>");
 }
 
-function setupSeason(data) {
+function writeSeason(data) {
   $("#main-selector").html(
-    `<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select Season</label>
-
-        <select
-            class="select relative bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            id="season-select">
-
-        </select>
-        <div id="episode-table"></div>`
+    `<div class="container bg-gray-100 rounded-lg p-3 w-full lg:max-w-full lg:flex py-3"><div class="p-2 sm:w-full w-fulllg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center"
+    title="poster"><label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select Season</label>
+       <div id="season-table"></div>
+   </div><div class="rounded-b lg:rounded-b-none lg:rounded-r p-6 flex flex-col justify-between leading-normal"><div id="episode-table"></div></div></div>`
   );
   var seasons = data.seasons;
   var html = ``;
+  var i = 0;
   seasons.forEach((season) => {
+    i += 1;
     if (season.name != "Specials") {
-      html += `<option class="option ${season.name == "Season 1" ? "active" : ""
-        } text-grey-900" value="${season.name}">${season.name}</option>`;
+      html += `<div class="w-auto p-1">`;
+      html += `<button href="#" class="round-lg c-card block shadow-md hover:shadow-xl rounded-sm ${"bg-red-600 text-white" && i == 1
+          ? "bg-blue-600 text-white"
+          : "bg-gray-100"
+        } px-2 sm:px-5" id="season-${i}">`;
+      html += `<h2 class="w-full mt-2 mb-2"><div class="flex items-center">${season.name}</div></h2>`;
+      html += `</button></div>`;
     }
   });
-  $("#season-select").html(html);
-  $("#season-select").on("change", updateEpsidoes);
+  $("#season-table").html(html);
+  for (var i = 1; i <= seasons.length; i++) {
+    console.log(i);
+    $("#season-" + i).on("click", function () {
+      const ss = $(this).text();
+      $("#season-table .bg-blue-600").removeClass("bg-blue-600 text-white");
+      $(this).addClass("bg-blue-600 text-white");
+      setupEpisodeTable(seasons_, ss);
+    });
+  }
 }
 
 function setupEpisodeTable(data, season) {
@@ -210,14 +208,22 @@ function setupEpisodeTable(data, season) {
       season = data[1];
     }
   } else {
+    console.log(season);
+    console.log(data);
     season = data.find((item) => {
       return item.name == season;
     });
   }
   for (let i = 1; i <= season.episode_count; i++) {
-    html += `<div class="w-1/3 md:w-1/3 xl:w-1/6 p-3">`;
-    html += `<button href="#" class="c-card block shadow-md hover:shadow-xl rounded-lg overflow-hidden ${"bg-red-600 text-white" && i == 1 ? "bg-red-600 text-white" : "bg-gray-100"} py-1 sm:px-10 px-3" id="episode-${i}">`;
-    html += `<h2 class="mt-2 mb-2 font-bold">Episode ${i}</h2>`;
+    html += `<div class="w-full sm:w-1/4 w-1/2 px-3 py-1">`;
+    html += `<button href="#" class="c-card block shadow-md hover:shadow-xl rounded-sm ${"bg-red-600 text-white" && i == 1
+        ? "bg-red-600 text-white"
+        : "bg-gray-100"
+      } px-4 sm:px-10 sm:w-full w-auto" id="episode-${i}">`;
+    html += `<h2 class="w-full mt-2 mb-2"><div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 28 28" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg> Episode ${i}</div></h2>`;
     html += `</button></div>`;
   }
   html += `</div>`;
@@ -236,11 +242,9 @@ function setupEpisodeTable(data, season) {
       thisButton.classList.add("bg-red-600");
       thisButton.classList.toggle("text-white");
       current_episode = i;
-    }
-    );
+    });
   }
 }
-
 
 getShow();
 
@@ -251,7 +255,7 @@ function updateEpsidoes() {
 }
 
 function changeStream(stream) {
-  var season = document.getElementById("season-select").value;
+  var season = $("#season-table .bg-red-600").text();
   season_id = seasons_.find((item) => {
     return item.name == season;
   }).season_number;
@@ -265,3 +269,82 @@ function changeStream(stream) {
     stream
   );
 }
+
+function typeAhead() {
+  query = $("#search-dropdown").val();
+  console.log(query);
+  if (query.length > 0 && query.length % 2 === 0) {
+    $.ajax({
+      url: `/autocomplete?query=${query}`,
+      type: "GET",
+      dataType: "json",
+      success: function (data) {
+        var html = "";
+        data.forEach((item) => {
+          html += `<li>
+                  <button type="button"
+                      class="inline-flex py-2 px-4 w-full hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      id="search-all">${item.label}</button>
+              </li>`;
+        });
+        $("#type-ahead-list").html(html);
+        if (
+          document
+            .getElementById("type-ahead-list")
+            .classList.contains("hidden")
+        ) {
+          $("#type-ahead-list").toggleClass("hidden");
+        }
+        for (var i = 0; i < data.length; i++) {
+          $("#type-ahead-list")
+            .children()
+            .eq(i)
+            .click(function () {
+              $("#search-dropdown").val($(this).text().trim());
+              $("#type-ahead-list").addClass("hidden");
+              $("#search-dropdown").focus();
+              searchTitle();
+            });
+        }
+      },
+    });
+  }
+}
+
+function searchTitle() {
+  query = $("#search-dropdown").val();
+  var html = `<div class="flex flex-wrap">`;
+  $.ajax({
+    url: `/search?query=${query}`,
+    type: "GET",
+    dataType: "json",
+    success: function (data) {
+      data.results.forEach((item) => {
+        if (item.poster_path != null) {
+          const url = `/title/${item.id}-${item.media_type}`;
+          html += `<div class="sm:w-24 w-1/3 p-3">`;
+          html += `<a href="${url}" class="c-card block shadow-md hover:shadow-xl rounded-lg overflow-hidden">`;
+          html += `<div class="relative overflow-hidden">`;
+          html += `<img class="h-auto w-auto object-cover"src="https://image.tmdb.org/t/p/w400/${item.poster_path}"alt=""></div>`;
+          html += `</a></div>`;
+        }
+      });
+      $("#suggest-dropdown").html(html + `</div>`);
+      $("#suggest-dropdown").toggleClass("hidden");
+    },
+  });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  $("#search-dropdown").on("keyup", typeAhead);
+  $("#search-submit").on("click", searchTitle);
+});
+
+$("body").click(function (e) {
+  if (!$(e.target).closest("#type-ahead-list").length) {
+    $("#type-ahead-list").addClass("hidden");
+  }
+  if (!$(e.target).closest("#suggest-dropdown").length) {
+    $("#suggest-dropdown").addClass("hidden");
+  }
+});
