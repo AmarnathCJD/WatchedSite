@@ -207,18 +207,12 @@ genresView = () => {
         $("#genres-dropdown").addClass("hidden");
         return;
     }
-    var html = `<div class="flex flex-wrap bg-gray-900 rounded-xl" id="genres-drop">`;
+    var html = `<div class="flex flex-wrap bg-indigo-500 rounded-lg" id="genres-drop">`;
     q = 0;
     genres.forEach((item) => {
         q += 1;
-        var rounded = "rounded-none"
-        if (q == 1) {
-            rounded = "rounded-none"
-        } else if (q == genres.length) {
-            rounded = "rounded-none"
-        }
-        html += `<div class="w-full sm:w-1/4 w-1/4 px-3 py-1"><button type="button"
-                  class=" inline-block px-6 py-2.5 bg-gray-900 opacity-100 text-white font-medium text-xs leading-tight uppercase hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-0 active:bg-gray-800 transition duration-150 ease-in-out ${rounded}"
+        html += `<div class="border-current sm:w-1/6 w-1/5 py-1"><button type="button"
+                  class="border-current inline-block px-4 py-2.5 bg-indigo-500 opacity-75 text-white font-medium text-xs leading-tight uppercase hover:bg-indigo-700 focus:bg-indigo-700 focus:outline-none focus:ring-0 active:bg-indigo-800 transition duration-150 ease-in-out"
                   id="search-all">${item}</button></div>`;
     });
     html += "</div>";
@@ -239,7 +233,6 @@ genresButton.onmouseover = genresView;
 
 
 if (searchP) {
-    console.log(searchP);
     $('#search-dropdown').val(searchP + "-genre");
     searchTitle();
 } else {
