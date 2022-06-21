@@ -16,7 +16,8 @@ const (
 )
 
 var (
-	PORT = getPort()
+	PORT   = getPort()
+	GENRES []Genre
 )
 
 func main() {
@@ -24,7 +25,13 @@ func main() {
 	fmt.Println(http.ListenAndServe(":"+PORT, nil))
 }
 
+type Genre struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+}
+
 func init() {
+	getGenre()
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		index := template.Must(template.ParseFiles("index.html"))
 		index.Execute(w, nil)
@@ -34,6 +41,7 @@ func init() {
 	http.HandleFunc("/search/movie", getMovie)
 	http.HandleFunc("/search/tv", getTvShow)
 	http.HandleFunc("/autocomplete", AutoComplete)
+	http.HandleFunc("/genre", getByGenre)
 	http.HandleFunc("/title/", func(w http.ResponseWriter, r *http.Request) {
 		title := template.Must(template.ParseFiles("title.html"))
 		title.Execute(w, nil)
@@ -89,6 +97,24 @@ func parseTrending(w http.ResponseWriter, query string) {
 	defer resp.Body.Close()
 	data, _ := ioutil.ReadAll(resp.Body)
 	fmt.Fprint(w, string(data))
+}
+
+func getGenre() {
+	_url := "https://api.themoviedb.org/3/genre/movie/list"
+	params := map[string]string{
+		"api_key":  TMDB_API_KEY,
+		"language": "en-US",
+	}
+	resp, err := http.Get(_url + "?" + encodeParams(params))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer resp.Body.Close()
+	data, _ := ioutil.ReadAll(resp.Body)
+	var genres map[string][]Genre
+	json.Unmarshal(data, &genres)
+	GENRES = genres["genres"]
 }
 
 func getMovie(w http.ResponseWriter, r *http.Request) {
@@ -165,6 +191,25 @@ func AutoComplete(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, string(d))
 }
 
+func getByGenre(w http.ResponseWriter, r *http.Request) {
+	_url := "https://api.themoviedb.org/3/discover/movie"
+	params := map[string]string{
+		"api_key":       TMDB_API_KEY,
+		"language":      "en-US",
+		"page":          "1",
+		"include_adult": "false",
+		"with_genres":   getGenreID(r.FormValue("genre")),
+	}
+	resp, err := http.Get(_url + "?" + encodeParams(params))
+	if err != nil {
+		fmt.Fprintf(w, "Error: %s", err)
+		return
+	}
+	defer resp.Body.Close()
+	data, _ := ioutil.ReadAll(resp.Body)
+	fmt.Fprint(w, string(data))
+}
+
 func encodeParams(params map[string]string) string {
 	var query string
 	for k, v := range params {
@@ -179,4 +224,13 @@ func getPort() string {
 		return "3000"
 	}
 	return port
+}
+
+func getGenreID(name string) string {
+	for _, v := range GENRES {
+		if strings.EqualFold(v.Name, name) {
+			return fmt.Sprint(v.ID)
+		}
+	}
+	return ""
 }

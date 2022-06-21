@@ -1,11 +1,14 @@
 const dropdownButton = document.getElementById("dropdown-button");
 const dropdownMenu = document.getElementById("dropdown");
 const searchMovie = document.getElementById("search-movie");
+const genres = ["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "History", "Horror", "Music", "Mystery", "Romance", "Science Fiction", "TV Movie", "Thriller", "War", "Western"];
+const genresButton = document.getElementById("genres-button");
 const searchTv = document.getElementById("search-tv");
 const searchAll = document.getElementById("search-all");
 const downArrowSvg = `<svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd"d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"clip-rule="evenodd"></path></svg>`
 const searchSubmit = document.getElementById("search-submit");
-
+const url = new URL(window.location.href);
+const searchP = url.searchParams.get("genre");
 
 var searchType = "all";
 
@@ -41,6 +44,10 @@ document.addEventListener('keydown', (e) => {
 function searchTitle() {
     var title = $('#search-dropdown').val() && $('#search-dropdown').val().length > 0 ? $('#search-dropdown').val() : "trending";
     var url = "/search?query=" + title + "&type=" + searchType;
+    if (title.includes("-genre")) {
+        url = "/genre?genre=" + title.split("-")[0]
+        $('#search-dropdown').val("");
+    }
     $.ajax({
         url: url,
         type: "GET",
@@ -55,8 +62,9 @@ function searchTitle() {
 function updateResultTable(data) {
     var table = '';
     data.results.forEach(item => {
+        const item_type = item.media_type || "movie";
         var html = `<div class="w-full sm:w-1/2 md:w-1/3 xl:w-1/5 p-4" id="${item.id}">
-        <a href="/title/${item.id}-${item.media_type}" class="c-card block bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden">
+        <a href="/title/${item.id}-${item_type}" class="c-card block bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden">
             <div class="relative pb-64 sm:pb-64 xl:pb-64 md:pb-60 overflow-hidden">
             <img class="absolute inset-0 h-full w-full object-cover"
                 src="https://image.tmdb.org/t/p/w500/${item.poster_path}"
@@ -194,6 +202,48 @@ $("#mobile-menu-toggle").click(function () {
     $("#mobile-menu").toggleClass("hidden");
 })
 
-searchTitle();
+genresView = () => {
+    if ($("#genres-dropdown").hasClass("hidden") == false) {
+        $("#genres-dropdown").addClass("hidden");
+        return;
+    }
+    var html = `<div class="flex flex-wrap bg-gray-900 rounded-xl" id="genres-drop">`;
+    q = 0;
+    genres.forEach((item) => {
+        q += 1;
+        var rounded = "rounded-none"
+        if (q == 1) {
+            rounded = "rounded-none"
+        } else if (q == genres.length) {
+            rounded = "rounded-none"
+        }
+        html += `<div class="w-full sm:w-1/4 w-1/4 px-3 py-1"><button type="button"
+                  class=" inline-block px-6 py-2.5 bg-gray-900 opacity-100 text-white font-medium text-xs leading-tight uppercase hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-0 active:bg-gray-800 transition duration-150 ease-in-out ${rounded}"
+                  id="search-all">${item}</button></div>`;
+    });
+    html += "</div>";
+    $("#genres-dropdown").html(html);
+    $("#genres-dropdown").toggleClass("hidden");
+    for (var i = 0; i < genres.length; i++) {
+        $("#genres-drop")
+            .children()
+            .eq(i)
+            .click(function () {
+                window.location.href = `/?genre=${$(this).text().trim()}`;
+            });
+    }
+}
+
+genresButton.onclick = genresView;
+genresButton.onmouseover = genresView;
+
+
+if (searchP) {
+    console.log(searchP);
+    $('#search-dropdown').val(searchP + "-genre");
+    searchTitle();
+} else {
+    searchTitle();
+}
 
 

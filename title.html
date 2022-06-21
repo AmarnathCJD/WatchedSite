@@ -8,7 +8,9 @@
     <meta name="og:title" content="Watch TV" />
     <meta name="og:description"
         content="Watch the latest movies and TV shows online or offline. Watch anywhere, anytime." />
-    <title>Watch Shows</title>
+    <meta name="description"
+        content="Watch the latest movies and TV shows online or offline. Watch anywhere, anytime." />
+    <title id="site-title">Watch Shows</title>
     <link rel="icon"
         href="https://img.icons8.com/external-kmg-design-flat-kmg-design/64/undefined/external-play-cinema-kmg-design-flat-kmg-design.png" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -54,8 +56,13 @@
                                 aria-current="page">Dashboard</a>
                             <a href="/"
                                 class="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                            <a href="#"
-                                class="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Genre</a>
+                            <button href="#"
+                                class="text-white hover:bg-gray-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                id="genres-button">Genres</button>
+                            <div id="genres-dropdown"
+                                class="hidden w-auto shadow dark:bg-gray-700 position-absolute mt-14 z-10"
+                                style="position: absolute;">
+                            </div>
                             <div class="flex-1 lg:ml-36 ml-24 relative lg:w-96 w-48">
                                 <input type="search" id="search-dropdown"
                                     class="rounded-lg block p-2 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
@@ -113,7 +120,7 @@
             </div>
         </div>
     </nav>
-    <header class="bg-white" id="header-main">
+    <header class="bg-white shadow-lg" id="header-main">
         <div class="mx-auto p-3 sm:px-6 lg:px-8 w-auto">
             <h1 class="font-bold text-gray-900 text-lg text-center" id="main-title"></h1>
         </div>

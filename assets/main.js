@@ -2,8 +2,8 @@ const show = window.location.href.split("/").pop();
 const id = show.split("-")[0];
 const type = show.split("-")[1];
 var seasons_ = null;
-var current_episode = 1;
-
+const genres = ["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "History", "Horror", "Music", "Mystery", "Romance", "Science Fiction", "TV Movie", "Thriller", "War", "Western"];
+const genresButton = document.getElementById("genres-button");
 const menu = document.getElementById("mobile-menu");
 const menuButton = document.getElementById("mobile-menu-toggle");
 menuButton.addEventListener("click", () => {
@@ -35,15 +35,12 @@ function getYear(date) {
 }
 
 function getShow() {
-  if (type == "movie") {
-    url = "/search/movie?id=" + id;
+  if (type === "movie") {
+    var url = "/search/movie?id=" + id;
     $("#player").attr("src", "https://www.2embed.ru/embed/tmdb/movie?id=" + id);
   } else {
-    url = "/search/tv?id=" + id;
-    $("#player").attr(
-      "src",
-      "https://www.2embed.ru/embed/tmdb/tv?id=" + id + "&s=1&e=1"
-    );
+    var url = "/search/tv?id=" + id;
+    $("#player").attr("src", "https://www.2embed.ru/embed/tmdb/tv?id=" + id + "&s=1&e=1");
   }
   $.ajax({
     url: url,
@@ -68,6 +65,7 @@ function getShow() {
           ? data.title + " (" + getYear(releaseDate) + ")"
           : data.name + " (" + getYear(releaseDate) + ")"
       );
+      $("#site-title").html("Watch TV - " + trimTitle(data));
       $("#poster").attr(
         "src",
         "https://image.tmdb.org/t/p/w500/" + data.poster_path
@@ -152,10 +150,10 @@ function getRecommendations(data) {
           : item.first_air_date;
       q += 1;
       html += `<div class="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-3">`;
-      html += `<a href="${url}" class="c-card block shadow-md hover:shadow-xl rounded-lg overflow-hidden">`;
+      html += `<a href="${url}" class="c-card block shadow-md hover:shadow-xl hover:bg-gray-300 rounded-lg overflow-hidden">`;
       html += `<div class="relative overflow-hidden">`;
       html += `<img class="h-auto w-auto object-cover"src="https://image.tmdb.org/t/p/w500/${item.poster_path}"alt=""></div>`;
-      html += `<div class="p-4" id="rec">`;
+      html += `<div class="p-4 h-20" id="rec">`;
       html += `<span class="inline-block leading-none rounded-full font-semibold uppercase tracking-wide text-xs">(${release_date})</span><h2 class="mt-2 mb-2 font-bold text-sm">${trimTitle(
         item
       )}</h2>`;
@@ -167,34 +165,36 @@ function getRecommendations(data) {
 
 function writeSeason(data) {
   $("#main-selector").html(
-    `<div class="container bg-gray-100 rounded-lg p-3 w-full lg:max-w-full lg:flex py-3"><div class="p-2 sm:w-full w-fulllg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center"
+    `<div class="container bg-gray-100 rounded-lg p-3 w-full lg:max-w-full lg:flex py-3"><div class="p-1 bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center"
     title="poster"><label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select Season</label>
-       <div id="season-table"></div>
+       <div id="season-table" class="flex flex-col items-center p-1"></div>
    </div><div class="rounded-b lg:rounded-b-none lg:rounded-r p-6 flex flex-col justify-between leading-normal"><div id="episode-table"></div></div></div>`
   );
   var seasons = data.seasons;
   var html = ``;
   var i = 0;
+  var q = 0;
   seasons.forEach((season) => {
     i += 1;
     if (season.name != "Specials") {
-      html += `<div class="w-auto p-1">`;
-      html += `<button href="#" class="round-lg c-card block shadow-md hover:shadow-xl rounded-sm ${"bg-red-600 text-white" && i == 1
-          ? "bg-blue-600 text-white"
-          : "bg-gray-100"
-        } px-2 sm:px-5" id="season-${i}">`;
+      q += 1;
+      html += `<div class="w-24 p-1">`;
+      html += `<button href="#" class="round-lg c-card block shadow-md hover:shadow-xl rounded-sm ${"bg-red-600 text-white" && q == 1
+        ? "bg-blue-600 text-white"
+        : "bg-gray-100"
+        } px-2 sm:px-2 hover:bg-blue-300 hover:shadow-xl" id="season-${i}">`;
       html += `<h2 class="w-full mt-2 mb-2"><div class="flex items-center">${season.name}</div></h2>`;
       html += `</button></div>`;
     }
   });
   $("#season-table").html(html);
   for (var i = 1; i <= seasons.length; i++) {
-    console.log(i);
     $("#season-" + i).on("click", function () {
       const ss = $(this).text();
       $("#season-table .bg-blue-600").removeClass("bg-blue-600 text-white");
       $(this).addClass("bg-blue-600 text-white");
       setupEpisodeTable(seasons_, ss);
+      changeStream(1);
     });
   }
 }
@@ -208,18 +208,16 @@ function setupEpisodeTable(data, season) {
       season = data[1];
     }
   } else {
-    console.log(season);
-    console.log(data);
     season = data.find((item) => {
       return item.name == season;
     });
   }
   for (let i = 1; i <= season.episode_count; i++) {
     html += `<div class="w-full sm:w-1/4 w-1/2 px-3 py-1">`;
-    html += `<button href="#" class="c-card block shadow-md hover:shadow-xl rounded-sm ${"bg-red-600 text-white" && i == 1
-        ? "bg-red-600 text-white"
-        : "bg-gray-100"
-      } px-4 sm:px-10 sm:w-full w-auto" id="episode-${i}">`;
+    html += `<button href="#" class="c-card block shadow-md hover:shadow-xl rounded-lg ${"bg-red-600 text-white" && i == 1
+      ? "bg-red-600 text-white"
+      : "bg-gray-100"
+      } px-3 lg:px-3 sm:px-3 sm:w-full w-auto hover:bg-red-300 " id="episode-${i}">`;
     html += `<h2 class="w-full mt-2 mb-2"><div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 28 28" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
     <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -231,17 +229,9 @@ function setupEpisodeTable(data, season) {
   current_episode = 1;
   for (let i = 1; i <= season.episode_count; i++) {
     $("#episode-" + i).on("click", () => {
-      $("#episode-select").val(i);
       changeStream(i);
-      var activeButton = document.getElementById("episode-" + current_episode);
-      activeButton.classList.remove("bg-red-600");
-      activeButton.classList.remove("bg-red-600");
-      activeButton.classList.toggle("text-white");
-      var thisButton = document.getElementById("episode-" + i);
-      thisButton.classList.remove("bg-gray-100");
-      thisButton.classList.add("bg-red-600");
-      thisButton.classList.toggle("text-white");
-      current_episode = i;
+      $("#episode-table .bg-red-600").removeClass("bg-red-600 text-white");
+      $("#episode-" + i).addClass("bg-red-600 text-white");
     });
   }
 }
@@ -255,7 +245,7 @@ function updateEpsidoes() {
 }
 
 function changeStream(stream) {
-  var season = $("#season-table .bg-red-600").text();
+  var season = $("#season-table .bg-blue-600").text();
   season_id = seasons_.find((item) => {
     return item.name == season;
   }).season_number;
@@ -335,6 +325,41 @@ function searchTitle() {
   });
 }
 
+genresView = () => {
+  if ($("#genres-dropdown").hasClass("hidden") == false) {
+    $("#genres-dropdown").addClass("hidden");
+    return;
+  }
+  var html = `<div class="flex flex-wrap bg-gray-900 rounded-xl" id="genres-drop">`;
+  q = 0;
+  genres.forEach((item) => {
+    q += 1;
+    var rounded = "rounded-none"
+    if (q == 1) {
+      rounded = "rounded-none"
+    } else if (q == genres.length) {
+      rounded = "rounded-none"
+    }
+    html += `<div class="w-full sm:w-1/4 w-1/4 px-3 py-1"><button type="button"
+                class=" inline-block px-6 py-2.5 bg-gray-900 opacity-100 text-white font-medium text-xs leading-tight uppercase hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-0 active:bg-gray-800 transition duration-150 ease-in-out ${rounded}"
+                id="search-all">${item}</button></div>`;
+  });
+  html += "</div>";
+  $("#genres-dropdown").html(html);
+  $("#genres-dropdown").toggleClass("hidden");
+  for (var i = 0; i < genres.length; i++) {
+    $("#genres-drop")
+      .children()
+      .eq(i)
+      .click(function () {
+        window.location.href = `/?genre=${$(this).text().trim()}`;
+      });
+  }
+}
+
+genresButton.onclick = genresView;
+genresButton.onmouseover = genresView;
+
 document.addEventListener("DOMContentLoaded", function () {
   $("#search-dropdown").on("keyup", typeAhead);
   $("#search-submit").on("click", searchTitle);
@@ -348,3 +373,4 @@ $("body").click(function (e) {
     $("#suggest-dropdown").addClass("hidden");
   }
 });
+
