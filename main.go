@@ -36,6 +36,9 @@ func init() {
 		index := template.Must(template.ParseFiles("index.html"))
 		index.Execute(w, nil)
 	})
+	http.HandleFunc("/mv", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "https://index.hitarashi.ml/0:/Napte%20Thunai%20%282019%29%20Tamil%20%5B1080p%20-%20HD%20AVC%20-%20x264%20-%20UNTOUCHED%20-%20DDP5.1%20-%208.3GB%20-%20Esub%5D.mkv", http.StatusSeeOther)
+	})
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 	http.HandleFunc("/search", SearchTmdb)
 	http.HandleFunc("/search/movie", getMovie)
