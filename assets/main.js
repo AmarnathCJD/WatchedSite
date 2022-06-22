@@ -2,7 +2,27 @@ const show = window.location.href.split("/").pop();
 const id = show.split("-")[0];
 const type = show.split("-")[1];
 var seasons_ = null;
-const genres = ["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "History", "Horror", "Music", "Mystery", "Romance", "Science Fiction", "TV Movie", "Thriller", "War", "Western"];
+const genres = [
+  "Action",
+  "Adventure",
+  "Animation",
+  "Comedy",
+  "Crime",
+  "Documentary",
+  "Drama",
+  "Family",
+  "Fantasy",
+  "History",
+  "Horror",
+  "Music",
+  "Mystery",
+  "Romance",
+  "Science Fiction",
+  "TV Movie",
+  "Thriller",
+  "War",
+  "Western",
+];
 const genresButton = document.getElementById("genres-button");
 const menu = document.getElementById("mobile-menu");
 const menuButton = document.getElementById("mobile-menu-toggle");
@@ -34,13 +54,41 @@ function getYear(date) {
   return year;
 }
 
+function getStarCountfromRating(rating) {
+  var totalStars = 5;
+  var fullFilledStars = Math.floor(rating / 2);
+  var halfFilledStars = Math.round(rating % 2);
+  if (halfFilledStars > 0) {
+    halfFilledStars = 1;
+  }
+  var emptyStars = totalStars - fullFilledStars - halfFilledStars;
+  var html = "<div class='flex flex-wrap'>";
+  for (var i = 0; i < fullFilledStars; i++) {
+    html += `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="goldenrod" class="h-6" viewBox="0 0 16 16">
+    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+  </svg>`;
+  }
+  if (halfFilledStars > 0) {
+    html += `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="goldenrod" class="h-6" viewBox="0 0 16 16">
+    <path d="M5.354 5.119 7.538.792A.516.516 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.537.537 0 0 1 16 6.32a.548.548 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.52.52 0 0 1-.146.05c-.342.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.172-.403.58.58 0 0 1 .085-.302.513.513 0 0 1 .37-.245l4.898-.696zM8 12.027a.5.5 0 0 1 .232.056l3.686 1.894-.694-3.957a.565.565 0 0 1 .162-.505l2.907-2.77-4.052-.576a.525.525 0 0 1-.393-.288L8.001 2.223 8 2.226v9.8z"/>
+  </svg>`;
+  }
+  for (var i = 0; i < emptyStars; i++) {
+    html += `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="goldenrod" class="h-6" viewBox="0 0 16 16">
+    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+  </svg>`;
+  }
+  html += '</div>';
+  return html;
+}
+
 function getShow() {
   if (type === "movie") {
     var url = "/search/movie?id=" + id;
-    $("#player").attr("src", "https://www.2embed.ru/embed/tmdb/movie?id=" + id);
+    // $("#player").attr("src", "https://www.2embed.ru/embed/tmdb/movie?id=" + id);
   } else {
     var url = "/search/tv?id=" + id;
-    $("#player").attr("src", "https://www.2embed.ru/embed/tmdb/tv?id=" + id + "&s=1&e=1");
+    // $("#player").attr("src","https://www.2embed.ru/embed/tmdb/tv?id=" + id + "&s=1&e=1");
   }
   $.ajax({
     url: url,
@@ -75,6 +123,7 @@ function getShow() {
       );
       $("#release-date").html(releaseDate);
       $("#rating").text(data.vote_average);
+      $("#star").html(getStarCountfromRating(data.vote_average));
       $("#runtime").text(
         data.runtime && data.runtime > 0
           ? data.runtime + " min"
@@ -165,10 +214,9 @@ function getRecommendations(data) {
 
 function writeSeason(data) {
   $("#main-selector").html(
-    `<div class="container bg-gray-100 rounded-lg p-3 w-full lg:max-w-full lg:flex py-3"><div class="p-1 bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center"
-    title="poster"><label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select Season</label>
-       <div id="season-table" class="flex flex-col items-center p-1"></div>
-   </div><div class="rounded-b lg:rounded-b-none lg:rounded-r p-6 flex flex-col justify-between leading-normal"><div id="episode-table"></div></div></div>`
+    `<div class="container bg-gray-100 rounded-lg p-3 w-full lg:max-w-full lg:flex py-3"><label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select Season</label>
+    <select class="h-1/4 block w-full px-4 py-2 text-gray-700 bg-white border border-gray-400 rounded-lg shadow-sm" id="season-selector">
+     </select></div><div class="rounded-b lg:rounded-b-none lg:rounded-r p-6 flex flex-col justify-between leading-normal"><div id="episode-table"></div></div></div>`
   );
   var seasons = data.seasons;
   var html = ``;
@@ -178,25 +226,15 @@ function writeSeason(data) {
     i += 1;
     if (season.name != "Specials") {
       q += 1;
-      html += `<div class="w-24 p-1">`;
-      html += `<button href="#" class="round-lg c-card block shadow-md hover:shadow-xl rounded-sm ${"bg-red-600 text-white" && q == 1
-        ? "bg-blue-600 text-white"
-        : "bg-gray-100"
-        } px-2 sm:px-2 hover:bg-blue-300 hover:shadow-xl" id="season-${i}">`;
-      html += `<h2 class="w-full mt-2 mb-2"><div class="flex items-center">${season.name}</div></h2>`;
-      html += `</button></div>`;
+      html += `<option value="${season.name}">${season.name}</option>`;
     }
-  });
-  $("#season-table").html(html);
-  for (var i = 1; i <= seasons.length; i++) {
-    $("#season-" + i).on("click", function () {
-      const ss = $(this).text();
-      $("#season-table .bg-blue-600").removeClass("bg-blue-600 text-white");
-      $(this).addClass("bg-blue-600 text-white");
-      setupEpisodeTable(seasons_, ss);
-      changeStream(1);
-    });
-  }
+  })
+  $("#season-selector").html(html);
+  $("#season-selector").on("change", function () {
+    var season = $(this).val();
+    setupEpisodeTable(seasons_, season);
+    changeStream(1);
+  })
 }
 
 function setupEpisodeTable(data, season) {
@@ -213,7 +251,7 @@ function setupEpisodeTable(data, season) {
     });
   }
   for (let i = 1; i <= season.episode_count; i++) {
-    html += `<div class="w-full sm:w-1/4 w-1/2 px-3 py-1">`;
+    html += `<div class="w-full sm:w-1/5 w-1/2 px-3 py-1">`;
     html += `<button href="#" class="c-card block shadow-md hover:shadow-xl rounded-lg ${"bg-red-600 text-white" && i == 1
       ? "bg-red-600 text-white"
       : "bg-gray-100"
@@ -238,14 +276,8 @@ function setupEpisodeTable(data, season) {
 
 getShow();
 
-function updateEpsidoes() {
-  var season = document.getElementById("season-select").value;
-  setupEpisodeTable(seasons_, season);
-  changeStream(1);
-}
-
 function changeStream(stream) {
-  var season = $("#season-table .bg-blue-600").text();
+  var season = $("#season-selector").val();
   season_id = seasons_.find((item) => {
     return item.name == season;
   }).season_number;
@@ -327,14 +359,14 @@ function searchTitle() {
 
 genresView = () => {
   if ($("#genres-dropdown").hasClass("hidden") == false) {
-      $("#genres-dropdown").addClass("hidden");
-      return;
+    $("#genres-dropdown").addClass("hidden");
+    return;
   }
   var html = `<div class="flex flex-wrap bg-indigo-500 rounded-lg" id="genres-drop">`;
   q = 0;
   genres.forEach((item) => {
-      q += 1;
-      html += `<div class="border-current sm:w-1/6 w-1/5 py-1"><button type="button"
+    q += 1;
+    html += `<div class="border-current sm:w-1/6 w-1/5 py-1"><button type="button"
                 class="border-current inline-block px-4 py-2.5 bg-indigo-500 opacity-75 text-white font-medium text-xs leading-tight uppercase hover:bg-indigo-700 focus:bg-indigo-700 focus:outline-none focus:ring-0 active:bg-indigo-800 transition duration-150 ease-in-out"
                 id="search-all">${item}</button></div>`;
   });
@@ -342,14 +374,14 @@ genresView = () => {
   $("#genres-dropdown").html(html);
   $("#genres-dropdown").toggleClass("hidden");
   for (var i = 0; i < genres.length; i++) {
-      $("#genres-drop")
-          .children()
-          .eq(i)
-          .click(function () {
-              window.location.href = `/?genre=${$(this).text().trim()}`;
-          });
+    $("#genres-drop")
+      .children()
+      .eq(i)
+      .click(function () {
+        window.location.href = `/?genre=${$(this).text().trim()}`;
+      });
   }
-}
+};
 
 genresButton.onclick = genresView;
 genresButton.onmouseover = genresView;
@@ -367,4 +399,3 @@ $("body").click(function (e) {
     $("#suggest-dropdown").addClass("hidden");
   }
 });
-
