@@ -78,17 +78,20 @@ function getStarCountfromRating(rating) {
     <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
   </svg>`;
   }
-  html += '</div>';
+  html += "</div>";
   return html;
 }
 
 function getShow() {
   if (type === "movie") {
     var url = "/search/movie?id=" + id;
-    // $("#player").attr("src", "https://www.2embed.ru/embed/tmdb/movie?id=" + id);
+    $("#player").attr("src", "https://www.2embed.ru/embed/tmdb/movie?id=" + id);
   } else {
     var url = "/search/tv?id=" + id;
-    // $("#player").attr("src","https://www.2embed.ru/embed/tmdb/tv?id=" + id + "&s=1&e=1");
+    $("#player").attr(
+      "src",
+      "https://www.2embed.ru/embed/tmdb/tv?id=" + id + "&s=1&e=1"
+    );
   }
   $.ajax({
     url: url,
@@ -187,6 +190,17 @@ function getCasts(casts) {
   return cast;
 }
 
+function getTrailer() {
+  $.ajax({
+    url: "/trailer?id=" + id + "&type=" + type,
+    type: "GET",
+    dataType: "json",
+    success: function (data) {
+      $("#player").attr("src", "https://www.youtube.com/embed/" + data.results[0].key);
+    }
+  });
+}
+
 function getRecommendations(data) {
   var q = 0;
   var html = "";
@@ -215,7 +229,7 @@ function getRecommendations(data) {
 function writeSeason(data) {
   $("#main-selector").html(
     `<div class="container bg-gray-100 rounded-lg p-3 w-full lg:max-w-full lg:flex py-3"><label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select Season</label>
-    <select class="h-1/4 block w-full px-4 py-2 text-gray-700 bg-white border border-gray-400 rounded-lg shadow-sm" id="season-selector">
+     <select class="h-1/4 block w-full px-4 py-2 text-gray-700 bg-white border border-gray-400 rounded-lg shadow-sm" id="season-selector">
      </select></div><div class="rounded-b lg:rounded-b-none lg:rounded-r p-6 flex flex-col justify-between leading-normal"><div id="episode-table"></div></div></div>`
   );
   var seasons = data.seasons;
@@ -228,13 +242,13 @@ function writeSeason(data) {
       q += 1;
       html += `<option value="${season.name}">${season.name}</option>`;
     }
-  })
+  });
   $("#season-selector").html(html);
   $("#season-selector").on("change", function () {
     var season = $(this).val();
     setupEpisodeTable(seasons_, season);
     changeStream(1);
-  })
+  });
 }
 
 function setupEpisodeTable(data, season) {
@@ -385,6 +399,9 @@ genresView = () => {
 
 genresButton.onclick = genresView;
 genresButton.onmouseover = genresView;
+$("#trailer-btn").on("click", () => {
+  getTrailer();
+});
 
 document.addEventListener("DOMContentLoaded", function () {
   $("#search-dropdown").on("keyup", typeAhead);

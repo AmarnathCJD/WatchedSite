@@ -15,14 +15,10 @@
         href="https://img.icons8.com/external-kmg-design-flat-kmg-design/64/undefined/external-play-cinema-kmg-design-flat-kmg-design.png" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <script src="/assets/tailwind.js"></script>
     <style>
-        .my-table-spacing {
-            border-spacing: theme("spacing.3");
-        }
+        @import url('https://rsms.me/inter/inter.css');
     </style>
-
 </head>
 
 <body class="h-full bg-gray-50 antialiased">
@@ -35,12 +31,11 @@
                         aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-toggle">
                         <span class="sr-only">Open main menu</span>
                         <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke-width="2" stroke="currentColor" aria-hidden="true">
+                            stroke-width="2" stroke="white" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
-
                         <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke-width="2" stroke="currentColor" aria-hidden="true">
+                            stroke-width="2" stroke="white" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
@@ -52,12 +47,12 @@
                     </div>
                     <div class="hidden sm:block sm:ml-6">
                         <div class="flex space-x-4">
-                            <a href="#" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+                            <a href="#" class="bg-gray-900 text-white px-3 py-2 rounded-sm text-sm font-medium"
                                 aria-current="page">Dashboard</a>
                             <a href="/"
-                                class="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                                class="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-sm text-sm font-medium">Home</a>
                             <button href="#"
-                                class="text-white hover:bg-gray-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                class="text-white hover:bg-gray-900 hover:text-white px-3 py-2 rounded-sm text-sm font-medium"
                                 id="genres-button">Genres</button>
                             <div id="genres-dropdown"
                                 class="hidden w-auto shadow dark:bg-gray-700 position-absolute mt-14 z-10"
@@ -88,6 +83,16 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                                     </svg></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                        <div class="ml-3 relative">
+                            <div>
+                                <button type="button" onclick="window.location.href='/signup'"
+                                    class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium bg-green-400 text-white">Sign
+                                    IN</button>
                             </div>
                         </div>
                     </div>
@@ -139,20 +144,14 @@
                     <p class="text-gray-900 text-center text-bold">
                         <b>If current server doesn't work please try other servers below.</b>
                     </p>
-                    <div
-                        class="flex flex-wrap justify-center container bg-gray-100 rounded-lg  p-3 w-full lg:max-w-full lg:flex py-3 space-x-6 hidden">
+                    <div class="flex flex-wrap justify-center container bg-gray-100 rounded-lg  p-2 w-full lg:max-w-full lg:flex py-3 space-x-6 hidden"
+                        id="server-list">
                         <button type="button"
-                            class="rounded-lg inline-block p-4 px-8 bg-red-500 text-white font-medium text-xs leading-tight uppercase hover:bg-red-700 focus:bg-red-700 focus:outline-none focus:ring-0 active:bg-red-800 transition duration-150 ease-in-out">
-                            VidCloud
-                        </button>
+                            class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">vidCloud</button>
                         <button type="button"
-                            class="rounded-lg inline-block p-4 px-8 bg-gray-400 text-white font-medium text-xs leading-tight uppercase hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-0 active:bg-gray-800 transition duration-150 ease-in-out">
-                            VidSrc
-                        </button>
+                            class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">vidSrc</button>
                         <button type="button"
-                            class="rounded-lg inline-block p-4 px-8 bg-gray-400 text-white font-medium text-xs leading-tight uppercase hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-0 active:bg-gray-800 transition duration-150 ease-in-out">
-                            Trailer
-                        </button>
+                            class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" id="trailer-btn">Trailer</button>
                     </div>
                 </div>
                 <div class="max-w-7xl mx-auto py-4 px-2 sm:px-2 lg:px-4 shadow overflow-hidden sm:rounded-lg">

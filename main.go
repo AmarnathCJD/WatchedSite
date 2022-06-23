@@ -45,6 +45,7 @@ func init() {
 	http.HandleFunc("/search/tv", getTvShow)
 	http.HandleFunc("/autocomplete", AutoComplete)
 	http.HandleFunc("/genre", getByGenre)
+	http.HandleFunc("/trailer", getTrailer)
 	http.HandleFunc("/title/", func(w http.ResponseWriter, r *http.Request) {
 		title := template.Must(template.ParseFiles("title.html"))
 		title.Execute(w, nil)
@@ -151,6 +152,23 @@ func getTvShow(w http.ResponseWriter, r *http.Request) {
 		"append_to_response": "similar,credits,episode_groups",
 	}
 	resp, err := http.Get(_url + _id + "?" + encodeParams(params))
+	if err != nil {
+		fmt.Fprintf(w, "Error: %s", err)
+		return
+	}
+	defer resp.Body.Close()
+	data, _ := ioutil.ReadAll(resp.Body)
+	fmt.Fprint(w, string(data))
+}
+
+func getTrailer(w http.ResponseWriter, r *http.Request) {
+	_type := r.FormValue("type")
+	_url := "https://api.themoviedb.org/3/" + _type + "/"
+	_id := r.FormValue("id")
+	params := map[string]string{
+		"api_key": TMDB_API_KEY,
+	}
+	resp, err := http.Get(_url + _id + "/videos?" + encodeParams(params))
 	if err != nil {
 		fmt.Fprintf(w, "Error: %s", err)
 		return
