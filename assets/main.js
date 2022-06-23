@@ -85,10 +85,10 @@ function getStarCountfromRating(rating) {
 function getShow() {
   if (type === "movie") {
     var url = "/search/movie?id=" + id;
-    // $("#player").attr("src", "https://www.2embed.ru/embed/tmdb/movie?id=" + id);
+    $("#player").attr("src", "https://www.2embed.ru/embed/tmdb/movie?id=" + id);
   } else {
     var url = "/search/tv?id=" + id;
-    // $("#player").attr("src","https://www.2embed.ru/embed/tmdb/tv?id=" + id + "&s=1&e=1");
+    $("#player").attr("src","https://www.2embed.ru/embed/tmdb/tv?id=" + id + "&s=1&e=1");
   }
   $.ajax({
     url: url,
