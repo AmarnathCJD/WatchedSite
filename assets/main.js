@@ -226,8 +226,8 @@ function getRecommendations(data) {
 
 function writeSeason(data) {
   $("#main-selector").html(
-    `<div class="container bg-gray-100 rounded-lg p-3 w-full lg:max-w-full lg:flex py-3"><label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select Season</label>
-     <select class="h-1/4 block w-full px-4 py-2 text-gray-700 bg-white border border-gray-400 rounded-lg shadow-sm" id="season-selector">
+    `<div class="p-4"><label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select Season</label>
+     <select class="h-10 block w-full px-4 py-2 text-gray-700 bg-white border border-gray-400 rounded-lg shadow-sm" id="season-selector">
      </select></div><div class="rounded-b lg:rounded-b-none lg:rounded-r p-6 flex flex-col justify-between leading-normal"><div id="episode-table"></div></div></div>`
   );
   var seasons = data.seasons;
@@ -264,9 +264,9 @@ function setupEpisodeTable(data, season) {
   }
   for (let i = 1; i <= season.episode_count; i++) {
     html += `<div class="w-full sm:w-1/5 w-1/2 px-3 py-1">`;
-    html += `<button href="#" class="c-card block shadow-md hover:shadow-xl rounded-lg ${"bg-red-600 text-white" && i == 1
+    html += `<button href="#" class="active:shadow-lg transition duration-150 ease-in-out rounded c-card block shadow-md hover:shadow-xl rounded-lg ${"bg-red-600 text-white" && i == 1
       ? "bg-red-600 text-white"
-      : "bg-gray-100"
+      : ""
       } px-3 lg:px-3 sm:px-3 sm:w-full w-auto hover:bg-red-300 " id="episode-${i}">`;
     html += `<h2 class="w-full mt-2 mb-2"><div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 28 28" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
@@ -276,7 +276,6 @@ function setupEpisodeTable(data, season) {
   }
   html += `</div>`;
   $("#episode-table").html(html);
-  current_episode = 1;
   for (let i = 1; i <= season.episode_count; i++) {
     $("#episode-" + i).on("click", () => {
       changeStream(i);
