@@ -58,6 +58,10 @@ func init() {
 		s := template.Must(template.ParseFiles("signup.html"))
 		s.Execute(w, nil)
 	})
+	http.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
+		s := template.Must(template.ParseFiles("test.html"))
+		s.Execute(w, nil)
+	})
 }
 
 func SearchTmdb(w http.ResponseWriter, r *http.Request) {
