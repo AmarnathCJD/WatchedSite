@@ -8,74 +8,92 @@
     <script src="/assets/tailwind.js"></script>
 </head>
 
-<body class='bg-gray-800 antialiased'>
-    <div class="container mx-auto px-4 bg-gray-900 rounded-lg">
-        <nav class="flex items-center justify-between flex-wrap bg-gray-900 p-6">
-            <div class="flex items-center flex-shrink-0 text-white mr-6">
-                <a href="#" class="text-white font-semibold text-xl">
-                    <span class="font-bold text-2xl">
-                        <i class="fas fa-code"></i>
-                        Watch TV
-                    </span>
-                </a>
-            </div>
-            <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-                <div class="text-sm lg:flex-grow">
-                    <a href="#" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-gray-200 mr-4">
-                        Home
-                    </a>
-                    <a href="#" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-gray-200 mr-4">
-                        About
-                    </a>
-                    <a href="#" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-gray-200 mr-4">
-                        Contact
-                    </a>
-                </div>
+<body class=' antialiased'>
+    <header>
+        <!-- navbar and menu -->
+        <nav class="shadow">
+
+            <div class="flex justify-between items-center py-6 px-10 container mx-auto">
+
                 <div>
-                    <a href="#"
-                        class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-500 hover:bg-white mt-4 lg:mt-0">
-                        Sign Up
-                    </a>
+                    <h1
+                        class="text-2xl font-bold bg-gradient-to-tr from-indigo-600 to-green-600 bg-clip-text text-transparent hover:cursor-pointer">
+                        Watch Series</h1>
                 </div>
-            </div>
-        </nav>
-    </div>
-    <div id="main-content" class="container mx-auto px-4">
-        <div class="flex flex-wrap shadow-lg">
-            <div class="w-full md:w-1/4 p-4">
-                <div class="rounded-lg p-6">
-                    <h2 class="text-white text-3xl font-semibold py-5">
-                        <span class="font-bold">
-                            <i class="fas fa-code"></i>
-                            Doctor
-                        </span>
-                        <span class="font-bold text-sm text-gray-400 py-2">
-                            <br>2021 * 2h 28m
-                        </span>
-                    </h2>
-                    <img src="https://m.media-amazon.com/images/M/MV5BMzljM2MxMTMtMjA1OS00YzZmLWEzODctMTkzMjdlNGU0NTc1XkEyXkFqcGdeQXVyMTA5MjQ4MDg4._V1_.jpg"
-                        alt="" class="">
-                </div>
-            </div>
-            <div class="w-full md:w-3/4 p-4">
-                <div class="p-6">
-                    <div id="genres-pills" class="flex flex-wrap">
-                        <a href="#" class="p-3 justify-center text-white bg-gray-900 rounded-lg">
-                            Action
-                        </a>
-                        <a href="#" class="p-2 text-white bg-gray-900 rounded-full">
-                            Comedy
-                        </a>
-                        <a href="#" class="p-2 text-white bg-gray-900 rounded-full">
-                            Drama
-                        </a>
-                        <a href="#" class="p-2 text-white bg-gray-900 rounded-full">
-                            Horror
-                        </a>
-                        <a href="#" class="p-2 text-white bg-gray-900 rounded-full">
-                            Sci-Fi
-                        </a>
+
+                <div>
+
+                    <div class="hover:cursor-pointer sm:hidden">
+                        <spnan class="h-1 rounded-full block w-8 mb-1 bg-gradient-to-tr from-indigo-600 to-green-600">
+                        </spnan>
+                        <spnan class="h-1 rounded-full block w-8 mb-1 bg-gradient-to-tr from-indigo-600 to-green-600">
+                        </spnan>
+                        <spnan class="h-1 rounded-full block w-8 mb-1 bg-gradient-to-tr from-indigo-600 to-green-600">
+                        </spnan>
+                    </div>
+                    <div class="flex items-center">
+
+                        <ul class="sm:flex space-x-4 hidden items-center">
+                            <li><a href="#" class="text-gray-700 hover:text-indigo-600 text-md ">Home</a></li>
+                            <li><a href="#" class="text-gray-700 hover:text-indigo-600 text-md ">About</a></li>
+                            <li><a href="#" class="text-gray-700 hover:text-indigo-600 text-md ">Services</a></li>
+                            <li><a href="#" class="text-gray-700 hover:text-indigo-600 text-md ">Products</a></li>
+                            <li><a href="#" class="text-gray-700 hover:text-indigo-600 text-md ">Contact</a></li>
+                        </ul>
+
+                        <div class="md:flex items-center hidden space-x-4 ml-8 lg:ml-12">
+                            <h1 class="text-text-gray-600  py-2 hover:cursor-pointer hover:text-indigo-600">LOGIN</h1>
+                            <h1
+                                class="text-text-gray-600  py-2 hover:cursor-pointer px-4 rounded text-white bg-gradient-to-tr from-indigo-600 to-green-600 hover:shadow-lg">
+                                SIGNUP</h1>
+                        </div>
                     </div>
                 </div>
             </div>
-</body>
+        </nav>
+    </header>
+    <main>
+        <!-- section hero -->
+        <section>
+            <div class="bg-gray-100 sm:grid grid-cols-5 grid-rows-2 px-4 py-6 space-y-6 sm:space-y-0 sm:gap-4">
+
+                <div
+                    class="h-[29rem] col-span-4 bg-gradient-to-tr from-indigo-800 to-indigo-500 rounded-md flex items-center">
+                    <iframe src="https://www.2embed.to/embed/imdb/tv?id=tt8103070&s=1&e=1" frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" height="100%"
+                        width="100%" allowfullscreen></iframe>
+
+                </div>
+                <div class="h-[29rem] col-span-1 ">
+                    <div class="bg-white py-3 px-4 rounded-lg flex justify-around items-center ">
+                        <input type="text" placeholder="seach"
+                            class=" bg-gray-100 rounded-md  outline-none pl-2 ring-indigo-700 w-full mr-2 p-2">
+                        <span><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor ">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg></span>
+                    </div>
+                    <div class="bg-white  rounded-md">
+                        <h1
+                            class="text-center text-xl my-4  bg-white py-2 rounded-md border-b-2 cursor-pointer  text-gray-600">
+                            Trending</h1>
+                        <div class="bg-white rounded-md list-none  text-center ">
+                            <li class="py-3 border-b-2"><a href="#"
+                                    class="list-none  hover:text-indigo-600">Products</a></li>
+                            <li class="py-3 border-b-2"><a href="#" class="list-none  hover:text-indigo-600">Models</a>
+                            </li>
+                            <li class="py-3 border-b-2"><a href="#" class="list-none  hover:text-indigo-600">Pricing</a>
+                            </li>
+                            <li class="py-3 border-b-2"><a href="#" class="list-none  hover:text-indigo-600">Hire</a>
+                            </li>
+                            <li class="py-3 border-b-2"><a href="#" class="list-none hover:text-indigo-600">Business</a>
+                            </li>
+                            <li class="py-3 "><a href="#"
+                                    class="list-none border-b-2 hover:text-indigo-600">Business</a></li>
+                        </div>
+                    </div>
+                </div>
+                
+        </section>
+    </main>
