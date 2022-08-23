@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,shrink-to-fit=no">
+    <title>M3U8 Player - HLSPlayer.net</title>
+    <meta name="keywords" content="m3u8 player, hls player, m3u8, hls">
+    <meta name="description"
+        content="This page allows you to play M3U8/HLS streams online with no installation required.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+    <video id="video"></video>
+    <script>
+        var video = document.getElementById('video');
+        var videoSrc = 'https://b-g-eu-15.feetcdn.com:2223/v3-hls-playback/c8fe20bcc6c6a5961d9546a93b737b507ca9eb3da7dac05e2f45de163369b202d1f02d63c79c9201859d92c6f8f35ab23fee456ebcb2a600312fa42ce2e63a9324581ed6944c129dbf616568af7264145e90d3d32f9f395c8016c3343dad965cc020939df9e6d186c02cf6ff182195a2bef869a79d808b125bce910931a2948ea8f7c158ac06cbeaa3295d5117f66eebda9c4f61d589e3917184e37429016307bb9fdcd8e7b0486811ff75d218c1636ce6ab13e6071e215bb77fbc0769ed79bf/720/index.m3u8';
+        if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+        }
+    </script>
+</body>
